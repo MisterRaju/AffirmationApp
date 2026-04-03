@@ -1,96 +1,573 @@
 [
-    "I am worthy of love and respect.",
-    "I embrace challenges and grow from them.",
-    "I am capable of achieving my goals.",
-    "I choose to focus on the positive today.",
-    "I am growing stronger every day.",
-    "I trust myself and my intuition.",
-    "I am enough, exactly as I am.",
-    "I am grateful for the abundance in my life.",
-    "I let go of what I cannot control.",
-    "I deserve time to rest and recharge.",
-    "My actions are aligned with my values.",
-    "I welcome new opportunities with confidence.",
-    "I am calm, centered, and grounded.",
-    "I radiate love and kindness to myself and others.",
-    "Every day I become a better version of myself.",
-    "I forgive myself and learn from my mistakes.",
-    "I attract positive and supportive people into my life.",
-    "I am resilient and can overcome setbacks.",
-    "I make time for the things that nourish me.",
-    "I am open to receiving good things.",
-    "I am creative and resourceful in solving problems.",
-    "I honor my needs and set healthy boundaries.",
-    "I celebrate small wins and progress.",
-    "I trust the process of life.",
-    "I give myself permission to rest.",
-    "I speak to myself with compassion.",
-    "I am patient with my growth.",
-    "I choose thoughts that empower me.",
-    "I release fear and welcome courage.",
-    "I am connected to my inner wisdom.",
-    "I am worthy of success and happiness.",
-    "I nurture my body, mind, and spirit.",
-    "I let go of comparisons to others.",
-    "I trust that everything unfolds in its time.",
-    "I am proud of how far I have come.",
-    "I create space for joy every day.",
-    "I am confident in my unique gifts.",
-    "I choose peace over worry.",
-    "I embrace change as an opportunity.",
-    "I am learning to love myself more each day.",
-    "I deserve to feel safe and supported.",
-    "My potential to succeed is limitless.",
-    "I release limiting beliefs that hold me back.",
-    "I am mindful and present in this moment.",
-    "I nourish relationships that uplift me.",
-    "I am worthy of rest and relaxation.",
-    "I choose to be optimistic about my future.",
-    "I am grateful for this present moment.",
-    "I accept myself unconditionally.",
-    "I attract opportunities that align with my purpose.",
-    "I honor my intuition and follow it.",
-    "I am capable of creating positive change.",
-    "I deserve abundance in all areas of my life.",
-    "I am resilient, strong, and brave.",
-    "I embrace my uniqueness and express it freely.",
-    "I choose to let go of tension and relax.",
-    "I am surrounded by love and abundance.",
-    "I am the architect of my life.",
-    "I release what no longer serves me.",
-    "I am in charge of how I feel today.",
-    "I create a life that brings me joy.",
-    "I trust myself to make the best decisions for me.",
-    "I am capable of achieving balance in my life.",
-    "I honor my emotions and give them space.",
-    "I am open to learning and growing.",
-    "I am a magnet for positive energy.",
-    "I accept opportunities that help me grow.",
-    "I am committed to improving a little each day.",
-    "I choose to forgive and move forward.",
-    "I am deserving of meaningful connections.",
-    "I trust my path and embrace the journey.",
-    "I am calm, confident, and collected.",
-    "I believe in my ability to succeed.",
-    "I am grateful for my healthy body and mind.",
-    "I create boundaries that protect my peace.",
-    "I welcome growth and celebrate progress.",
-    "I allow myself to receive love and kindness.",
-    "I am aligned with abundance and prosperity.",
-    "I choose to see beauty in ordinary moments.",
-    "I let go of fear and embrace love.",
-    "I speak my truth with clarity and compassion.",
-    "I am worthy of achieving my dreams.",
-    "I radiate confidence and positivity.",
-    "I invest in myself and my well-being.",
-    "I trust that I am exactly where I need to be.",
-    "I focus on solutions and take action.",
-    "I am gentle with myself during tough times.",
-    "I am grateful for the lessons life gives me.",
-    "I celebrate my strengths and acknowledge my growth.",
-    "I am energized by my purpose.",
-    "I attract supportive and loving people.",
-    "I accept change and adapt with ease.",
-    "I honor my commitments and follow through.",
-    "I am free to create the life I want."
+    {
+        "text": "I am worthy of love and respect.",
+        "categories": [
+            "general",
+            "breakup"
+        ]
+    },
+    {
+        "text": "I embrace challenges and grow from them.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I am capable of achieving my goals.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I choose to focus on the positive today.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am growing stronger every day.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I trust myself and my intuition.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am enough, exactly as I am.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am grateful for the abundance in my life.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I let go of what I cannot control.",
+        "categories": [
+            "self-care",
+            "breakup"
+        ]
+    },
+    {
+        "text": "I deserve time to rest and recharge.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "My actions are aligned with my values.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I welcome new opportunities with confidence.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I am calm, centered, and grounded.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I radiate love and kindness to myself and others.",
+        "categories": [
+            "general",
+            "breakup"
+        ]
+    },
+    {
+        "text": "Every day I become a better version of myself.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I forgive myself and learn from my mistakes.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I attract positive and supportive people into my life.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am resilient and can overcome setbacks.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I make time for the things that nourish me.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am open to receiving good things.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am creative and resourceful in solving problems.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I honor my needs and set healthy boundaries.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I celebrate small wins and progress.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I trust the process of life.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I give myself permission to rest.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I speak to myself with compassion.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am patient with my growth.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I choose thoughts that empower me.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I release fear and welcome courage.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I am connected to my inner wisdom.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am worthy of success and happiness.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I nurture my body, mind, and spirit.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I let go of comparisons to others.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I trust that everything unfolds in its time.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am proud of how far I have come.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I create space for joy every day.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am confident in my unique gifts.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I choose peace over worry.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I embrace change as an opportunity.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I am learning to love myself more each day.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I deserve to feel safe and supported.",
+        "categories": [
+            "general",
+            "breakup"
+        ]
+    },
+    {
+        "text": "My potential to succeed is limitless.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I release limiting beliefs that hold me back.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I am mindful and present in this moment.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I nourish relationships that uplift me.",
+        "categories": [
+            "general",
+            "breakup"
+        ]
+    },
+    {
+        "text": "I am worthy of rest and relaxation.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I choose to be optimistic about my future.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I am grateful for this present moment.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I accept myself unconditionally.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I attract opportunities that align with my purpose.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I honor my intuition and follow it.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am capable of creating positive change.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I deserve abundance in all areas of my life.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am resilient, strong, and brave.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I embrace my uniqueness and express it freely.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I choose to let go of tension and relax.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am surrounded by love and abundance.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am the architect of my life.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I release what no longer serves me.",
+        "categories": [
+            "self-care",
+            "breakup"
+        ]
+    },
+    {
+        "text": "I am in charge of how I feel today.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I create a life that brings me joy.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I trust myself to make the best decisions for me.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I am capable of achieving balance in my life.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I honor my emotions and give them space.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am open to learning and growing.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I am a magnet for positive energy.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I accept opportunities that help me grow.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I am committed to improving a little each day.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I choose to forgive and move forward.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am deserving of meaningful connections.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I trust my path and embrace the journey.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am calm, confident, and collected.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I believe in my ability to succeed.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I am grateful for my healthy body and mind.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I create boundaries that protect my peace.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I welcome growth and celebrate progress.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I allow myself to receive love and kindness.",
+        "categories": [
+            "general",
+            "breakup"
+        ]
+    },
+    {
+        "text": "I am aligned with abundance and prosperity.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I choose to see beauty in ordinary moments.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I let go of fear and embrace love.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I speak my truth with clarity and compassion.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am worthy of achieving my dreams.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I radiate confidence and positivity.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I invest in myself and my well-being.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I trust that I am exactly where I need to be.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I focus on solutions and take action.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I am gentle with myself during tough times.",
+        "categories": [
+            "self-care"
+        ]
+    },
+    {
+        "text": "I am grateful for the lessons life gives me.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I celebrate my strengths and acknowledge my growth.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I am energized by my purpose.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I attract supportive and loving people.",
+        "categories": [
+            "general"
+        ]
+    },
+    {
+        "text": "I accept change and adapt with ease.",
+        "categories": [
+            "student"
+        ]
+    },
+    {
+        "text": "I honor my commitments and follow through.",
+        "categories": [
+            "career"
+        ]
+    },
+    {
+        "text": "I am free to create the life I want.",
+        "categories": [
+            "general"
+        ]
+    }
 ]
