@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
   StatusBar,
   StyleSheet,
   Modal,
-  TouchableOpacity,
   Pressable,
   FlatList,
+  Switch,
+  TouchableOpacity,
 } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import PagerView from 'react-native-pager-view';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const affirmations = require('./affirmations.json');
+const Stack = createNativeStackNavigator();
 
 const CATEGORIES = [
   { key: 'career', label: 'Career' },
@@ -22,14 +26,96 @@ const CATEGORIES = [
   { key: 'general', label: 'General' },
 ];
 
-const App = () => {
+const THEMES = {
+  peach: {
+    key: 'peach',
+    label: 'Peach Bliss',
+    isDark: false,
+    colors: {
+      background: '#fff4ec',
+      surface: '#ffe8da',
+      card: '#fff6ef',
+      border: '#f1b08f',
+      textPrimary: '#5f3a2f',
+      textSecondary: '#6f4a3b',
+      accent: '#f49a6c',
+      accentMuted: '#ffd8c1',
+      overlay: 'rgba(108,66,50,0.35)',
+      header: '#ffe8da',
+    },
+  },
+  apricot: {
+    key: 'apricot',
+    label: 'Apricot Glow',
+    isDark: false,
+    colors: {
+      background: '#fff8f1',
+      surface: '#ffead5',
+      card: '#fff4e8',
+      border: '#efbf95',
+      textPrimary: '#5a3b24',
+      textSecondary: '#765136',
+      accent: '#ea8d55',
+      accentMuted: '#ffd9bb',
+      overlay: 'rgba(118,81,54,0.3)',
+      header: '#ffead5',
+    },
+  },
+  coral: {
+    key: 'coral',
+    label: 'Soft Coral',
+    isDark: false,
+    colors: {
+      background: '#fff5f3',
+      surface: '#ffe2dc',
+      card: '#fff1ed',
+      border: '#efb3a5',
+      textPrimary: '#5e3730',
+      textSecondary: '#744a41',
+      accent: '#e98270',
+      accentMuted: '#ffd0c5',
+      overlay: 'rgba(116,74,65,0.33)',
+      header: '#ffe2dc',
+    },
+  },
+};
+
+const SETTINGS_DEFAULTS = {
+  dailyReminder: true,
+  calmAnimations: true,
+  autoplayPager: false,
+  hapticFeedback: true,
+};
+
+const HeaderActions = ({ navigation, theme }) => (
+  <View style={styles.headerActions}>
+    <Pressable
+      style={({ pressed }) => [
+        styles.headerButton,
+        { borderColor: theme.colors.border, backgroundColor: theme.colors.card },
+        pressed && { opacity: 0.75 },
+      ]}
+      onPress={() => navigation.navigate('Favorites')}
+    >
+      <Text style={[styles.headerButtonText, { color: theme.colors.textPrimary }]}>Favorites</Text>
+    </Pressable>
+    <Pressable
+      style={({ pressed }) => [
+        styles.headerButton,
+        { borderColor: theme.colors.border, backgroundColor: theme.colors.card },
+        pressed && { opacity: 0.75 },
+      ]}
+      onPress={() => navigation.navigate('Settings')}
+    >
+      <Text style={[styles.headerButtonText, { color: theme.colors.textPrimary }]}>Settings</Text>
+    </Pressable>
+  </View>
+);
+
+const HomeScreen = ({ navigation, theme, favorites, toggleFavorite }) => {
   const [index, setIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
-
-  useEffect(() => {
-    BootSplash.hide({ fade: true });
-  }, []);
 
   const toggleCategory = key => {
     setSelectedCategories(prev =>
@@ -44,38 +130,71 @@ const App = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff4ec" />
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
+      <StatusBar
+        barStyle={theme.isDark ? 'light-content' : 'dark-content'}
+        backgroundColor={theme.colors.header}
+      />
 
-      <PagerView
-        style={styles.pager}
-        key={filtered.length} // force update when filter changes
-        initialPage={0}
-        orientation="vertical"
-        onPageSelected={e => setIndex(e.nativeEvent.position)}
-      >
-        {filtered.map((a, i) => (
-          <View key={i} style={styles.page}>
-            <Text style={styles.text}>{a.text}</Text>
+      <View style={styles.contentArea}>
+        {filtered.length > 0 ? (
+          <PagerView
+            style={styles.pager}
+            key={filtered.length}
+            initialPage={0}
+            orientation="vertical"
+            onPageSelected={e => setIndex(e.nativeEvent.position)}
+          >
+            {filtered.map((a, i) => (
+              <View key={i} style={styles.page}>
+                <Text style={[styles.text, { color: theme.colors.textPrimary }]}>{a.text}</Text>
+                <Pressable
+                  onPress={() => toggleFavorite(a.text)}
+                  style={({ pressed }) => [
+                    styles.favoriteButton,
+                    {
+                      borderColor: favorites.includes(a.text)
+                        ? theme.colors.accent
+                        : theme.colors.border,
+                      backgroundColor: favorites.includes(a.text)
+                        ? theme.colors.accentMuted
+                        : theme.colors.card,
+                    },
+                    pressed && { opacity: 0.8 },
+                  ]}
+                  accessibilityLabel="Toggle favorite"
+                >
+                  <Text style={[styles.favoriteButtonText, { color: theme.colors.textPrimary }]}>
+                    {favorites.includes(a.text) ? 'Remove from Favorites' : 'Add to Favorites'}
+                  </Text>
+                </Pressable>
+              </View>
+            ))}
+          </PagerView>
+        ) : (
+          <View style={styles.emptyState}>
+            <Text style={[styles.emptyStateTitle, { color: theme.colors.textPrimary }]}>No affirmations found</Text>
+            <Text style={[styles.emptyStateSubtitle, { color: theme.colors.textSecondary }]}>Try selecting fewer categories.</Text>
           </View>
-        ))}
-      </PagerView>
+        )}
+
+      </View>
 
       <TouchableOpacity
-        style={styles.fab}
+        style={[styles.fab, { backgroundColor: theme.colors.accent }]}
         onPress={() => setModalVisible(true)}
         accessibilityLabel="Open categories"
       >
-        <Text style={styles.fabText}>⋮</Text>
+        <Text style={[styles.fabText, { color: theme.colors.textPrimary }]}>...</Text>
       </TouchableOpacity>
 
       <Modal visible={modalVisible} animationType="slide" transparent>
         <Pressable
-          style={styles.modalOverlay}
+          style={[styles.modalOverlay, { backgroundColor: theme.colors.overlay }]}
           onPress={() => setModalVisible(false)}
         >
-          <Pressable style={styles.modalBox} onPress={() => {}}>
-            <Text style={styles.modalTitle}>Select categories</Text>
+          <Pressable style={[styles.modalBox, { backgroundColor: theme.colors.surface }]} onPress={() => {}}>
+            <Text style={[styles.modalTitle, { color: theme.colors.textPrimary }]}>Select categories</Text>
             <FlatList
               data={CATEGORIES}
               keyExtractor={item => item.key}
@@ -88,19 +207,17 @@ const App = () => {
                     onPress={() => toggleCategory(item.key)}
                     style={({ pressed }) => [
                       styles.catItem,
-                      selected && styles.catItemSelected,
-                      pressed && styles.catItemPressed,
+                      {
+                        borderColor: selected ? theme.colors.accent : theme.colors.border,
+                        backgroundColor: selected ? theme.colors.accentMuted : theme.colors.card,
+                      },
+                      pressed && { opacity: 0.8 },
                     ]}
                   >
-                    <Text
-                      style={[
-                        styles.catText,
-                        selected && styles.catTextSelected,
-                      ]}
-                    >
+                    <Text style={[styles.catText, { color: theme.colors.textSecondary }, selected && styles.catTextSelected]}>
                       {item.label}
                     </Text>
-                    {selected && <Text style={styles.check}>✓</Text>}
+                    {selected && <Text style={[styles.check, { color: theme.colors.textPrimary }]}>ok</Text>}
                   </Pressable>
                 );
               }}
@@ -111,11 +228,11 @@ const App = () => {
                 onPress={() => setSelectedCategories([])}
                 style={styles.actionButton}
               >
-                <Text style={styles.actionText}>Clear</Text>
+                <Text style={[styles.actionText, { color: theme.colors.textSecondary }]}>Clear</Text>
               </Pressable>
               <Pressable
                 onPress={() => setModalVisible(false)}
-                style={[styles.actionButton, styles.applyButton]}
+                style={[styles.actionButton, styles.applyButton, { backgroundColor: theme.colors.accent }]}
               >
                 <Text style={[styles.actionText, styles.applyText]}>Apply</Text>
               </Pressable>
@@ -127,8 +244,249 @@ const App = () => {
   );
 };
 
+const FavoritesScreen = ({ theme, favorites, toggleFavorite }) => {
+  const favoriteItems = affirmations.filter(item => favorites.includes(item.text));
+
+  return (
+    <View style={[styles.screenContainer, { backgroundColor: theme.colors.background }]}> 
+      <FlatList
+        data={favoriteItems}
+        keyExtractor={item => item.text}
+        contentContainerStyle={styles.favoritesList}
+        ListEmptyComponent={
+          <View style={styles.emptyState}>
+            <Text style={[styles.emptyStateTitle, { color: theme.colors.textPrimary }]}>No favorites yet</Text>
+            <Text style={[styles.emptyStateSubtitle, { color: theme.colors.textSecondary }]}>Tap "Add to Favorites" on the home screen.</Text>
+          </View>
+        }
+        renderItem={({ item }) => (
+          <View
+            style={[
+              styles.favoriteCard,
+              {
+                backgroundColor: theme.colors.card,
+                borderColor: theme.colors.border,
+              },
+            ]}
+          >
+            <Text style={[styles.favoriteText, { color: theme.colors.textPrimary }]}>{item.text}</Text>
+            <Pressable
+              onPress={() => toggleFavorite(item.text)}
+              style={({ pressed }) => [
+                styles.removeFavoriteButton,
+                { backgroundColor: theme.colors.accentMuted, borderColor: theme.colors.border },
+                pressed && { opacity: 0.75 },
+              ]}
+            >
+              <Text style={[styles.removeFavoriteButtonText, { color: theme.colors.textPrimary }]}>Remove</Text>
+            </Pressable>
+          </View>
+        )}
+      />
+    </View>
+  );
+};
+
+const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings }) => {
+  const updateSetting = (key, value) => {
+    setSettings(prev => ({ ...prev, [key]: value }));
+  };
+
+  return (
+    <View style={[styles.screenContainer, { backgroundColor: theme.colors.background }]}> 
+      <FlatList
+        data={Object.values(THEMES)}
+        keyExtractor={item => item.key}
+        ListHeaderComponent={
+          <View>
+            <Text style={[styles.settingsSectionTitle, { color: theme.colors.textPrimary }]}>Appearance</Text>
+            <Text style={[styles.settingsSectionSubtitle, { color: theme.colors.textSecondary }]}>Choose a theme that feels right for your day.</Text>
+          </View>
+        }
+        contentContainerStyle={styles.settingsList}
+        renderItem={({ item }) => {
+          const active = item.key === themeName;
+          return (
+            <Pressable
+              onPress={() => setThemeName(item.key)}
+              style={({ pressed }) => [
+                styles.themeOption,
+                {
+                  backgroundColor: active ? theme.colors.accentMuted : theme.colors.card,
+                  borderColor: active ? theme.colors.accent : theme.colors.border,
+                },
+                pressed && { opacity: 0.8 },
+              ]}
+            >
+              <View>
+                <Text style={[styles.themeOptionTitle, { color: theme.colors.textPrimary }]}>{item.label}</Text>
+                <Text style={[styles.themeOptionSubtitle, { color: theme.colors.textSecondary }]}>{active ? 'Currently active' : 'Tap to apply'}</Text>
+              </View>
+              <Text style={[styles.themeOptionBadge, { color: theme.colors.textPrimary }]}>{active ? 'ON' : 'OFF'}</Text>
+            </Pressable>
+          );
+        }}
+        ListFooterComponent={
+          <View>
+            <Text style={[styles.settingsSectionTitle, { color: theme.colors.textPrimary }]}>Preferences</Text>
+            <View style={[styles.settingRow, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+              <View style={styles.settingTextGroup}>
+                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>Daily reminder</Text>
+                <Text style={[styles.settingHint, { color: theme.colors.textSecondary }]}>Receive one affirmation nudge each day.</Text>
+              </View>
+              <Switch
+                value={settings.dailyReminder}
+                onValueChange={value => updateSetting('dailyReminder', value)}
+                thumbColor="#ffffff"
+                trackColor={{ false: '#d6c0b5', true: theme.colors.accent }}
+              />
+            </View>
+            <View style={[styles.settingRow, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+              <View style={styles.settingTextGroup}>
+                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>Calm animations</Text>
+                <Text style={[styles.settingHint, { color: theme.colors.textSecondary }]}>Keep transitions smooth and slow.</Text>
+              </View>
+              <Switch
+                value={settings.calmAnimations}
+                onValueChange={value => updateSetting('calmAnimations', value)}
+                thumbColor="#ffffff"
+                trackColor={{ false: '#d6c0b5', true: theme.colors.accent }}
+              />
+            </View>
+            <View style={[styles.settingRow, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+              <View style={styles.settingTextGroup}>
+                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>Autoplay pager</Text>
+                <Text style={[styles.settingHint, { color: theme.colors.textSecondary }]}>Auto-scroll affirmations every few seconds.</Text>
+              </View>
+              <Switch
+                value={settings.autoplayPager}
+                onValueChange={value => updateSetting('autoplayPager', value)}
+                thumbColor="#ffffff"
+                trackColor={{ false: '#d6c0b5', true: theme.colors.accent }}
+              />
+            </View>
+            <View style={[styles.settingRow, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+              <View style={styles.settingTextGroup}>
+                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>Haptic feedback</Text>
+                <Text style={[styles.settingHint, { color: theme.colors.textSecondary }]}>Use subtle vibration on taps.</Text>
+              </View>
+              <Switch
+                value={settings.hapticFeedback}
+                onValueChange={value => updateSetting('hapticFeedback', value)}
+                thumbColor="#ffffff"
+                trackColor={{ false: '#d6c0b5', true: theme.colors.accent }}
+              />
+            </View>
+
+            <Text style={[styles.settingsSectionTitle, { color: theme.colors.textPrimary }]}>About</Text>
+            <View style={[styles.aboutCard, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+              <Text style={[styles.aboutText, { color: theme.colors.textSecondary }]}>Affir helps you stay grounded with quick daily affirmations.</Text>
+            </View>
+          </View>
+        }
+      />
+    </View>
+  );
+};
+
+const App = () => {
+  const [themeName, setThemeName] = useState('peach');
+  const [favorites, setFavorites] = useState([]);
+  const [settings, setSettings] = useState(SETTINGS_DEFAULTS);
+
+  useEffect(() => {
+    BootSplash.hide({ fade: true });
+  }, []);
+
+  const theme = THEMES[themeName] || THEMES.peach;
+
+  const toggleFavorite = text => {
+    setFavorites(prev =>
+      prev.includes(text) ? prev.filter(item => item !== text) : [...prev, text],
+    );
+  };
+
+  const navTheme = useMemo(
+    () => ({
+      dark: theme.isDark,
+      colors: {
+        primary: theme.colors.accent,
+        background: theme.colors.background,
+        card: theme.colors.header,
+        text: theme.colors.textPrimary,
+        border: theme.colors.border,
+        notification: theme.colors.accent,
+      },
+      fonts: {
+        regular: { fontFamily: 'System', fontWeight: '400' },
+        medium: { fontFamily: 'System', fontWeight: '500' },
+        bold: { fontFamily: 'System', fontWeight: '700' },
+        heavy: { fontFamily: 'System', fontWeight: '800' },
+      },
+    }),
+    [theme],
+  );
+
+  return (
+    <NavigationContainer theme={navTheme}>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: { backgroundColor: theme.colors.header },
+          headerTintColor: theme.colors.textPrimary,
+          headerTitleStyle: { fontWeight: '700' },
+          contentStyle: { backgroundColor: theme.colors.background },
+        }}
+      >
+        <Stack.Screen
+          name="Home"
+          options={({ navigation }) => ({
+            title: 'Affirmations',
+            headerRight: () => <HeaderActions navigation={navigation} theme={theme} />,
+          })}
+        >
+          {props => (
+            <HomeScreen
+              {...props}
+              theme={theme}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+            />
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Favorites" options={{ title: 'Favorites' }}>
+          {props => (
+            <FavoritesScreen
+              {...props}
+              theme={theme}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+            />
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Settings" options={{ title: 'Settings' }}>
+          {props => (
+            <SettingsScreen
+              {...props}
+              theme={theme}
+              themeName={themeName}
+              setThemeName={setThemeName}
+              settings={settings}
+              setSettings={setSettings}
+            />
+          )}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff4ec' },
+  container: { flex: 1 },
+  contentArea: { flex: 1 },
+  screenContainer: { flex: 1 },
   pager: { flex: 1 },
   page: {
     flex: 1,
@@ -137,10 +495,39 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   text: {
-    color: '#5f3a2f',
     fontSize: 24,
     fontWeight: '600',
     lineHeight: 34,
+    textAlign: 'center',
+    paddingHorizontal: 8,
+  },
+  favoriteButton: {
+    marginTop: 16,
+    borderRadius: 14,
+    borderWidth: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  favoriteButtonText: {
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  emptyStateTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  emptyStateSubtitle: {
+    fontSize: 15,
     textAlign: 'center',
   },
   fab: {
@@ -155,14 +542,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 6,
   },
-  fabText: { color: '#5f3a2f', fontSize: 24, lineHeight: 28 },
+  fabText: { fontSize: 16, lineHeight: 20, fontWeight: '700' },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(108,66,50,0.35)',
     justifyContent: 'flex-end',
   },
   modalBox: {
-    backgroundColor: '#ffe8da',
     padding: 20,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
@@ -172,7 +557,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 12,
-    color: '#6c4232',
     textAlign: 'center',
   },
   catRow: {
@@ -185,27 +569,135 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#f1b08f',
-    backgroundColor: '#fff6ef',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
     paddingVertical: 14,
   },
-  catItemSelected: { backgroundColor: '#ffd8c1', borderColor: '#e9875a' },
-  catItemPressed: { backgroundColor: '#ffe3d1' },
-  catText: { fontSize: 16, color: '#6b4739', textAlign: 'center' },
-  catTextSelected: { color: '#6c2e16', fontWeight: '700' },
-  check: { color: '#8a3f20', fontSize: 14, position: 'absolute', top: 8, right: 10 },
+  catText: { fontSize: 16, textAlign: 'center' },
+  catTextSelected: { fontWeight: '700' },
+  check: { fontSize: 14, position: 'absolute', top: 8, right: 10, fontWeight: '700' },
   modalActions: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginTop: 12,
   },
   actionButton: { paddingVertical: 8, paddingHorizontal: 12, marginLeft: 8 },
-  applyButton: { backgroundColor: '#f49a6c', borderRadius: 6 },
-  actionText: { color: '#6f4a3b', fontWeight: '600' },
+  applyButton: { borderRadius: 6 },
+  actionText: { fontWeight: '600' },
   applyText: { color: '#ffffff' },
+
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  headerButton: {
+    borderWidth: 1,
+    borderRadius: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    marginLeft: 6,
+  },
+  headerButtonText: {
+    fontSize: 12,
+    fontWeight: '700',
+  },
+
+  favoritesList: {
+    padding: 16,
+    gap: 12,
+    flexGrow: 1,
+  },
+  favoriteCard: {
+    borderWidth: 1,
+    borderRadius: 14,
+    padding: 14,
+  },
+  favoriteText: {
+    fontSize: 17,
+    lineHeight: 25,
+    marginBottom: 12,
+  },
+  removeFavoriteButton: {
+    alignSelf: 'flex-start',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  removeFavoriteButtonText: {
+    fontSize: 13,
+    fontWeight: '700',
+  },
+
+  settingsList: {
+    padding: 16,
+    paddingBottom: 28,
+  },
+  settingsSectionTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    marginBottom: 4,
+    marginTop: 4,
+  },
+  settingsSectionSubtitle: {
+    fontSize: 14,
+    marginBottom: 14,
+  },
+  themeOption: {
+    borderWidth: 1,
+    borderRadius: 14,
+    padding: 12,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  themeOptionTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  themeOptionSubtitle: {
+    fontSize: 13,
+    marginTop: 2,
+  },
+  themeOptionBadge: {
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 0.3,
+  },
+  settingRow: {
+    borderWidth: 1,
+    borderRadius: 14,
+    padding: 12,
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  settingTextGroup: {
+    flex: 1,
+    paddingRight: 12,
+  },
+  settingTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  settingHint: {
+    fontSize: 13,
+    marginTop: 2,
+  },
+  aboutCard: {
+    borderWidth: 1,
+    borderRadius: 14,
+    padding: 12,
+    marginTop: 10,
+  },
+  aboutText: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
 });
 
 export default App;
