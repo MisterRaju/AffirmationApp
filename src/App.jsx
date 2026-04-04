@@ -45,7 +45,7 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#121212" />
+      <StatusBar barStyle="dark-content" backgroundColor="#fff4ec" />
 
       <PagerView
         style={styles.pager}
@@ -128,7 +128,7 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#121212' },
+  container: { flex: 1, backgroundColor: '#fff4ec' },
   pager: { flex: 1 },
   page: {
     flex: 1,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   text: {
-    color: '#dbdbdb',
+    color: '#5f3a2f',
     fontSize: 24,
     fontWeight: '600',
     lineHeight: 34,
@@ -150,19 +150,19 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#393939',
+    backgroundColor: '#ffb48f',
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 6,
   },
-  fabText: { color: '#fff', fontSize: 24, lineHeight: 28 },
+  fabText: { color: '#5f3a2f', fontSize: 24, lineHeight: 28 },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(108,66,50,0.35)',
     justifyContent: 'flex-end',
   },
   modalBox: {
-    backgroundColor: '#1f1f1f',
+    backgroundColor: '#ffe8da',
     padding: 20,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 12,
-    color: '#e8e8e8',
+    color: '#6c4232',
     textAlign: 'center',
   },
   catRow: {
@@ -185,27 +185,27 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#3a3a3a',
-    backgroundColor: '#181818',
+    borderColor: '#f1b08f',
+    backgroundColor: '#fff6ef',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
     paddingVertical: 14,
   },
-  catItemSelected: { backgroundColor: '#2d2d2d', borderColor: '#5a5a5a' },
-  catItemPressed: { backgroundColor: '#242424' },
-  catText: { fontSize: 16, color: '#e6e6e6', textAlign: 'center' },
-  catTextSelected: { color: '#ffffff', fontWeight: '700' },
-  check: { color: '#ffffff', fontSize: 14, position: 'absolute', top: 8, right: 10 },
+  catItemSelected: { backgroundColor: '#ffd8c1', borderColor: '#e9875a' },
+  catItemPressed: { backgroundColor: '#ffe3d1' },
+  catText: { fontSize: 16, color: '#6b4739', textAlign: 'center' },
+  catTextSelected: { color: '#6c2e16', fontWeight: '700' },
+  check: { color: '#8a3f20', fontSize: 14, position: 'absolute', top: 8, right: 10 },
   modalActions: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginTop: 12,
   },
   actionButton: { paddingVertical: 8, paddingHorizontal: 12, marginLeft: 8 },
-  applyButton: { backgroundColor: '#3a3a3a', borderRadius: 6 },
-  actionText: { color: '#e6e6e6', fontWeight: '600' },
-  applyText: { color: '#fff' },
+  applyButton: { backgroundColor: '#f49a6c', borderRadius: 6 },
+  actionText: { color: '#6f4a3b', fontWeight: '600' },
+  applyText: { color: '#ffffff' },
 });
 
 export default App;
