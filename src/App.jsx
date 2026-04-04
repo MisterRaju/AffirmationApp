@@ -14,6 +14,7 @@ import BootSplash from 'react-native-bootsplash';
 import PagerView from 'react-native-pager-view';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const affirmations = require('./affirmations.json');
 const Stack = createNativeStackNavigator();
@@ -96,8 +97,9 @@ const HeaderActions = ({ navigation, theme }) => (
         pressed && { opacity: 0.75 },
       ]}
       onPress={() => navigation.navigate('Favorites')}
+      accessibilityLabel="Open favorites"
     >
-      <Text style={[styles.headerButtonText, { color: theme.colors.textPrimary }]}>Favorites</Text>
+      <MaterialIcons name="favorite-border" size={20} color={theme.colors.textPrimary} />
     </Pressable>
     <Pressable
       style={({ pressed }) => [
@@ -106,8 +108,9 @@ const HeaderActions = ({ navigation, theme }) => (
         pressed && { opacity: 0.75 },
       ]}
       onPress={() => navigation.navigate('Settings')}
+      accessibilityLabel="Open settings"
     >
-      <Text style={[styles.headerButtonText, { color: theme.colors.textPrimary }]}>Settings</Text>
+      <MaterialIcons name="settings" size={20} color={theme.colors.textPrimary} />
     </Pressable>
   </View>
 );
@@ -164,9 +167,16 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite }) => {
                   ]}
                   accessibilityLabel="Toggle favorite"
                 >
-                  <Text style={[styles.favoriteButtonText, { color: theme.colors.textPrimary }]}>
-                    {favorites.includes(a.text) ? 'Remove from Favorites' : 'Add to Favorites'}
-                  </Text>
+                  <View style={styles.iconLabelRow}>
+                    <MaterialIcons
+                      name={favorites.includes(a.text) ? 'favorite' : 'favorite-border'}
+                      size={30}
+                      color={theme.colors.textPrimary}
+                    />
+                    {/* <Text style={[styles.favoriteButtonText, { color: theme.colors.textPrimary }]}>
+                      {favorites.includes(a.text) ? 'Remove from Favorites' : 'Add to Favorites'}
+                    </Text> */}
+                  </View>
                 </Pressable>
               </View>
             ))}
@@ -185,7 +195,7 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite }) => {
         onPress={() => setModalVisible(true)}
         accessibilityLabel="Open categories"
       >
-        <Text style={[styles.fabText, { color: theme.colors.textPrimary }]}>...</Text>
+        <MaterialIcons name="tune" size={22} color={theme.colors.textPrimary} />
       </TouchableOpacity>
 
       <Modal visible={modalVisible} animationType="slide" transparent>
@@ -217,7 +227,7 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite }) => {
                     <Text style={[styles.catText, { color: theme.colors.textSecondary }, selected && styles.catTextSelected]}>
                       {item.label}
                     </Text>
-                    {selected && <Text style={[styles.check, { color: theme.colors.textPrimary }]}>ok</Text>}
+                    {selected && <MaterialIcons name="check-circle" size={16} color={theme.colors.textPrimary} style={styles.check} />}
                   </Pressable>
                 );
               }}
@@ -226,15 +236,26 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite }) => {
             <View style={styles.modalActions}>
               <Pressable
                 onPress={() => setSelectedCategories([])}
-                style={styles.actionButton}
+                style={({ pressed }) => [styles.actionButton, pressed && { opacity: 0.75 }]}
               >
-                <Text style={[styles.actionText, { color: theme.colors.textSecondary }]}>Clear</Text>
+                <View style={styles.iconLabelRow}>
+                  <MaterialIcons name="refresh" size={16} color={theme.colors.textSecondary} />
+                  <Text style={[styles.actionText, { color: theme.colors.textSecondary }]}>Clear</Text>
+                </View>
               </Pressable>
               <Pressable
                 onPress={() => setModalVisible(false)}
-                style={[styles.actionButton, styles.applyButton, { backgroundColor: theme.colors.accent }]}
+                style={({ pressed }) => [
+                  styles.actionButton,
+                  styles.applyButton,
+                  { backgroundColor: theme.colors.accent },
+                  pressed && { opacity: 0.8 },
+                ]}
               >
-                <Text style={[styles.actionText, styles.applyText]}>Apply</Text>
+                <View style={styles.iconLabelRow}>
+                  <MaterialIcons name="done" size={16} color="#ffffff" />
+                  <Text style={[styles.actionText, styles.applyText]}>Apply</Text>
+                </View>
               </Pressable>
             </View>
           </Pressable>
@@ -278,7 +299,10 @@ const FavoritesScreen = ({ theme, favorites, toggleFavorite }) => {
                 pressed && { opacity: 0.75 },
               ]}
             >
-              <Text style={[styles.removeFavoriteButtonText, { color: theme.colors.textPrimary }]}>Remove</Text>
+              <View style={styles.iconLabelRow}>
+                <MaterialIcons name="delete-outline" size={16} color={theme.colors.textPrimary} />
+                <Text style={[styles.removeFavoriteButtonText, { color: theme.colors.textPrimary }]}>Remove</Text>
+              </View>
             </Pressable>
           </View>
         )}
@@ -322,7 +346,11 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
                 <Text style={[styles.themeOptionTitle, { color: theme.colors.textPrimary }]}>{item.label}</Text>
                 <Text style={[styles.themeOptionSubtitle, { color: theme.colors.textSecondary }]}>{active ? 'Currently active' : 'Tap to apply'}</Text>
               </View>
-              <Text style={[styles.themeOptionBadge, { color: theme.colors.textPrimary }]}>{active ? 'ON' : 'OFF'}</Text>
+              <MaterialIcons
+                name={active ? 'radio-button-checked' : 'radio-button-unchecked'}
+                size={22}
+                color={active ? theme.colors.accent : theme.colors.textSecondary}
+              />
             </Pressable>
           );
         }}
@@ -514,6 +542,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
   },
+  iconLabelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: 6,
+  },
   emptyState: {
     flex: 1,
     justifyContent: 'center',
@@ -542,7 +575,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 6,
   },
-  fabText: { fontSize: 16, lineHeight: 20, fontWeight: '700' },
   modalOverlay: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -594,14 +626,12 @@ const styles = StyleSheet.create({
   },
   headerButton: {
     borderWidth: 1,
-    borderRadius: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
+    borderRadius: 18,
+    width: 36,
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginLeft: 6,
-  },
-  headerButtonText: {
-    fontSize: 12,
-    fontWeight: '700',
   },
 
   favoritesList: {
@@ -661,11 +691,6 @@ const styles = StyleSheet.create({
   themeOptionSubtitle: {
     fontSize: 13,
     marginTop: 2,
-  },
-  themeOptionBadge: {
-    fontSize: 12,
-    fontWeight: '800',
-    letterSpacing: 0.3,
   },
   settingRow: {
     borderWidth: 1,
