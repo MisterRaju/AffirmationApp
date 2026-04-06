@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import AppNavigator from './navigation/AppNavigator';
 import { SETTINGS_DEFAULTS } from './constants/settings';
@@ -22,15 +23,17 @@ const App = () => {
   };
 
   return (
-    <AppNavigator
-      theme={theme}
-      favorites={favorites}
-      toggleFavorite={toggleFavorite}
-      themeName={themeName}
-      setThemeName={setThemeName}
-      settings={settings}
-      setSettings={setSettings}
-    />
+    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <AppNavigator
+        theme={theme}
+        favorites={favorites}
+        toggleFavorite={toggleFavorite}
+        themeName={themeName}
+        setThemeName={setThemeName}
+        settings={settings}
+        setSettings={setSettings}
+      />
+    </View>
   );
 };
 

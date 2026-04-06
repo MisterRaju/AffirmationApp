@@ -26,7 +26,7 @@ const AppNavigator = ({ theme, favorites, toggleFavorite, themeName, setThemeNam
         <Stack.Screen
           name="Home"
           options={({ navigation }) => ({
-            title: 'Affirmations',
+            title: 'Affir',
             // React Navigation headerRight expects a function returning a node.
             // eslint-disable-next-line react/no-unstable-nested-components
             headerRight: () => <HeaderActions navigation={navigation} theme={theme} />,
