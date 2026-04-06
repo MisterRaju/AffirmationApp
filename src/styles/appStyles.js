@@ -9,7 +9,61 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
     paddingHorizontal: 30,
+  },
+  hiddenShotContainer: {
+    position: 'absolute',
+    top: -10000,
+    left: -10000,
+  },
+  shareCardCapture: {
+    width: 1080,
+    height: 1080,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 120,
+    position: 'relative',
+  },
+  shareBrandRow: {
+    position: 'absolute',
+    top: 64,
+    left: 64,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  shareAvatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 36,
+    marginRight: 18,
+  },
+  shareLogo: {
+    fontSize: 52,
+    fontStyle: 'italic',
+    fontWeight: '700',
+    letterSpacing: 0.5,
+  },
+  shareText: {
+    fontSize: 64,
+    lineHeight: 86,
+    textAlign: 'center',
+  },
+  mainAffirmationText: {
+    marginBottom: 8,
+  },
+  pageActionsRow: {
+    position: 'absolute',
+    bottom: 150,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12,
+  },
+  shareButton: {
+    marginTop: 16,
   },
   text: {
     fontSize: 24,
@@ -21,7 +75,6 @@ const styles = StyleSheet.create({
   favoriteButton: {
     marginTop: 16,
     borderRadius: 14,
-    borderWidth: 1,
     paddingVertical: 12,
     paddingHorizontal: 14,
     alignItems: 'center',
@@ -111,16 +164,14 @@ const styles = StyleSheet.create({
   headerActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 14,
   },
   headerButton: {
-    borderWidth: 1,
-    borderRadius: 18,
-    width: 36,
-    height: 36,
+    minWidth: 40,
+    minHeight: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 6,
+    marginLeft: 4,
   },
 
   favoritesList: {

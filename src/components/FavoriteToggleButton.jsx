@@ -9,8 +9,7 @@ const FavoriteToggleButton = ({ theme, isFavorite, onPress, showLabel = true }) 
     style={({ pressed }) => [
       styles.favoriteButton,
       {
-        borderColor: isFavorite ? theme.colors.accent : theme.colors.border,
-        backgroundColor: isFavorite ? theme.colors.accentMuted : theme.colors.card,
+        backgroundColor: theme.colors.card,
       },
       pressed && { opacity: 0.8 },
     ]}
@@ -20,7 +19,7 @@ const FavoriteToggleButton = ({ theme, isFavorite, onPress, showLabel = true }) 
       <MaterialIcons
         name={isFavorite ? 'favorite' : 'favorite-border'}
         size={30}
-        color={theme.colors.textPrimary}
+        color={isFavorite ? theme.colors.accent : theme.colors.textPrimary}
       />
       {showLabel && (
         <Text style={[styles.favoriteButtonText, { color: theme.colors.textPrimary }]}>

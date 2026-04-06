@@ -13,10 +13,7 @@ const CategoryModal = ({
   theme,
 }) => (
   <Modal visible={visible} animationType="slide" transparent>
-    <Pressable
-      style={[styles.modalOverlay, { backgroundColor: theme.colors.overlay }]}
-      onPress={onClose}
-    >
+    <Pressable style={styles.modalOverlay} onPress={onClose}>
       <Pressable
         style={[styles.modalBox, { backgroundColor: theme.colors.surface }]}
         onPress={() => {}}

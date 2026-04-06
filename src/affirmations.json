@@ -1,573 +1,632 @@
 [
     {
-        "text": "I am worthy of love and respect.",
-        "categories": [
-            "general",
-            "breakup"
-        ]
-    },
-    {
-        "text": "I embrace challenges and grow from them.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I am capable of achieving my goals.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I choose to focus on the positive today.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am growing stronger every day.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I trust myself and my intuition.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am enough, exactly as I am.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am grateful for the abundance in my life.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I let go of what I cannot control.",
-        "categories": [
-            "self-care",
-            "breakup"
-        ]
-    },
-    {
-        "text": "I deserve time to rest and recharge.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "My actions are aligned with my values.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I welcome new opportunities with confidence.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I am calm, centered, and grounded.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I radiate love and kindness to myself and others.",
-        "categories": [
-            "general",
-            "breakup"
-        ]
-    },
-    {
-        "text": "Every day I become a better version of myself.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I forgive myself and learn from my mistakes.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I attract positive and supportive people into my life.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am resilient and can overcome setbacks.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I make time for the things that nourish me.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am open to receiving good things.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am creative and resourceful in solving problems.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I honor my needs and set healthy boundaries.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I celebrate small wins and progress.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I trust the process of life.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I give myself permission to rest.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I speak to myself with compassion.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am patient with my growth.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I choose thoughts that empower me.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I release fear and welcome courage.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I am connected to my inner wisdom.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am worthy of success and happiness.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I nurture my body, mind, and spirit.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I let go of comparisons to others.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I trust that everything unfolds in its time.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am proud of how far I have come.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I create space for joy every day.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am confident in my unique gifts.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I choose peace over worry.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I embrace change as an opportunity.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I am learning to love myself more each day.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I deserve to feel safe and supported.",
-        "categories": [
-            "general",
-            "breakup"
-        ]
-    },
-    {
-        "text": "My potential to succeed is limitless.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I release limiting beliefs that hold me back.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I am mindful and present in this moment.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I nourish relationships that uplift me.",
-        "categories": [
-            "general",
-            "breakup"
-        ]
-    },
-    {
-        "text": "I am worthy of rest and relaxation.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I choose to be optimistic about my future.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I am grateful for this present moment.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I accept myself unconditionally.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I attract opportunities that align with my purpose.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I honor my intuition and follow it.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am capable of creating positive change.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I deserve abundance in all areas of my life.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am resilient, strong, and brave.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I embrace my uniqueness and express it freely.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I choose to let go of tension and relax.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am surrounded by love and abundance.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am the architect of my life.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I release what no longer serves me.",
-        "categories": [
-            "self-care",
-            "breakup"
-        ]
-    },
-    {
-        "text": "I am in charge of how I feel today.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I create a life that brings me joy.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I trust myself to make the best decisions for me.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I am capable of achieving balance in my life.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I honor my emotions and give them space.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am open to learning and growing.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I am a magnet for positive energy.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I accept opportunities that help me grow.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I am committed to improving a little each day.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I choose to forgive and move forward.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am deserving of meaningful connections.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I trust my path and embrace the journey.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am calm, confident, and collected.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I believe in my ability to succeed.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I am grateful for my healthy body and mind.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I create boundaries that protect my peace.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I welcome growth and celebrate progress.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I allow myself to receive love and kindness.",
-        "categories": [
-            "general",
-            "breakup"
-        ]
-    },
-    {
-        "text": "I am aligned with abundance and prosperity.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I choose to see beauty in ordinary moments.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I let go of fear and embrace love.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I speak my truth with clarity and compassion.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am worthy of achieving my dreams.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I radiate confidence and positivity.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I invest in myself and my well-being.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I trust that I am exactly where I need to be.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I focus on solutions and take action.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I am gentle with myself during tough times.",
-        "categories": [
-            "self-care"
-        ]
-    },
-    {
-        "text": "I am grateful for the lessons life gives me.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I celebrate my strengths and acknowledge my growth.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I am energized by my purpose.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I attract supportive and loving people.",
-        "categories": [
-            "general"
-        ]
-    },
-    {
-        "text": "I accept change and adapt with ease.",
-        "categories": [
-            "student"
-        ]
-    },
-    {
-        "text": "I honor my commitments and follow through.",
-        "categories": [
-            "career"
-        ]
-    },
-    {
-        "text": "I am free to create the life I want.",
-        "categories": [
-            "general"
+        "category": "breakup",
+        "affirmations": [
+            "I am worthy of love and respect.",
+            "I release the past and embrace the future.",
+            "I am healing more every day.",
+            "My worth is not defined by someone else's opinion.",
+            "I am whole on my own.",
+            "I am grateful for the lessons learned.",
+            "I am choosing my own peace.",
+            "I am allowing myself to feel and heal.",
+            "I am attracting a love that is healthy and kind.",
+            "I am free to be myself.",
+            "I am making space for someone who truly deserves me.",
+            "I trust that everything happens for a reason.",
+            "I am stronger than I think.",
+            "I love myself enough to move on.",
+            "I am finding joy in my own company.",
+            "I am at peace with being single.",
+            "I am worthy of a loyal partner.",
+            "I am reclaiming my power.",
+            "I am letting go with grace.",
+            "I am open to new beginnings.",
+            "My heart is healing and getting stronger.",
+            "I am not defined by my relationship status.",
+            "I am deserving of a fresh start.",
+            "I am focused on my own growth.",
+            "I am beautiful, inside and out.",
+            "I am surrounded by people who love me.",
+            "I am enough, regardless of who is by my side.",
+            "I am looking forward to my future.",
+            "I am a survivor.",
+            "I am creating a life I love alone.",
+            "I release all bitterness and resentment.",
+            "I am patient with my healing process.",
+            "I am choosing to forgive for my own peace.",
+            "I am worthy of unconditional love.",
+            "I am taking back my happiness.",
+            "I am better off now.",
+            "I am excited for what's next.",
+            "I am a complete person by myself.",
+            "I am free from the weight of the past.",
+            "I am proud of my strength.",
+            "I am healing at my own pace.",
+            "I am deserving of a partner who chooses me.",
+            "I am rediscovering who I am.",
+            "I am becoming the best version of myself.",
+            "I am capable of loving again.",
+            "I am moving on with confidence.",
+            "I am choosing to be happy today.",
+            "I am a prize to be won.",
+            "I am worthy of clarity and honesty.",
+            "I am grateful for my resilience.",
+            "I am leaving behind what is not for me.",
+            "I am creating my own closure.",
+            "I am more than enough.",
+            "I am attracting positive relationships.",
+            "I am safe and secure in my own life.",
+            "I am allowed to be happy again.",
+            "I am turning my pain into power.",
+            "I am worthy of a love that stays.",
+            "I am blooming on my own.",
+            "I am focused on self-care.",
+            "I am letting go of 'what ifs'.",
+            "I am worthy of a healthy attachment.",
+            "I am independent and capable.",
+            "I am a warrior of the heart.",
+            "I am radiating self-love.",
+            "I am no longer settling for less.",
+            "I am choosing my mental health.",
+            "I am grateful for my freedom.",
+            "I am worthy of someone who puts in the effort.",
+            "I am finding my strength in the silence.",
+            "I am building a beautiful new life.",
+            "I am allowed to grieve, but I will not stay there.",
+            "I am a magnet for genuine connections.",
+            "I am trusting the timing of my life.",
+            "I am worthy of respect in all relationships.",
+            "I am letting go of the need for approval.",
+            "I am kind to my healing heart.",
+            "I am strong, stable, and secure.",
+            "I am proud of the progress I've made.",
+            "I am looking forward with hope.",
+            "I am a vessel of resilience.",
+            "I am choosing self-respect over comfort.",
+            "I am finding my voice again.",
+            "I am worthy of a deep, soulful connection.",
+            "I am at peace with my journey.",
+            "I am letting go of the old to make room for the new.",
+            "I am valuable and precious.",
+            "I am attracting peace and stability.",
+            "I am making myself a priority.",
+            "I am worth the wait.",
+            "I am a radiant being of light.",
+            "I am letting go of toxic patterns.",
+            "I am deserving of a fresh perspective.",
+            "I am growing through what I go through.",
+            "I am becoming wiser every day.",
+            "I am whole, happy, and healed.",
+            "I am embracing the unknown.",
+            "I am a masterpiece in progress.",
+            "I am my own best friend.",
+            "I am ready for my best chapter yet."
+        ]
+    },
+    {
+        "category": "career",
+        "affirmations": [
+            "I embrace challenges and grow from them.",
+            "I am a leader in my field.",
+            "I am talented and capable of great things.",
+            "Opportunities for growth are everywhere.",
+            "I am confident in my professional abilities.",
+            "I am a valuable asset to my team.",
+            "I am attracting my dream job.",
+            "I am well-compensated for my skills.",
+            "I am focused and productive.",
+            "I am respected by my colleagues.",
+            "I am constantly improving my skills.",
+            "I am a magnet for success and promotion.",
+            "I am confident when I speak up.",
+            "I am a creative problem solver.",
+            "I am deserving of a fulfilling career.",
+            "I am organized and efficient.",
+            "I am open to new career opportunities.",
+            "I am the master of my professional destiny.",
+            "I am building a successful career path.",
+            "I am achieving my career goals one by one.",
+            "I am resilient in the face of setbacks.",
+            "I am a visionary.",
+            "I am attracting the right mentors.",
+            "I am calm and confident under pressure.",
+            "I am proud of my professional achievements.",
+            "I am a great communicator.",
+            "I am worthy of a high salary.",
+            "I am making a positive impact through my work.",
+            "I am focused on my long-term vision.",
+            "I am disciplined and driven.",
+            "I am attracting abundance through my career.",
+            "I am confident in my interviews.",
+            "I am a quick learner.",
+            "I am in the right place at the right time.",
+            "I am creating my own opportunities.",
+            "I am valued for my unique perspective.",
+            "I am successful in everything I do.",
+            "I am balanced between work and life.",
+            "I am moving up the career ladder.",
+            "I am confident in my leadership skills.",
+            "I am an expert in my niche.",
+            "I am attracting dream clients.",
+            "I am clear about my professional purpose.",
+            "I am a high-performer.",
+            "I am motivated and inspired.",
+            "I am deserving of professional recognition.",
+            "I am making smart career moves.",
+            "I am a confident negotiator.",
+            "I am worthy of work-life harmony.",
+            "I am destined for success.",
+            "I am breaking through my career plateaus.",
+            "I am attracting collaborative partners.",
+            "I am a source of innovation.",
+            "I am confident in my decision-making.",
+            "I am getting better at what I do every day.",
+            "I am worthy of a job I love.",
+            "I am attracting wealth through my expertise.",
+            "I am courageous in my career choices.",
+            "I am a natural-born leader.",
+            "I am successful because I never give up.",
+            "I am a magnet for career breakthroughs.",
+            "I am respected for my work ethic.",
+            "I am focused on results.",
+            "I am open to constructive feedback.",
+            "I am confident in my career transition.",
+            "I am building a strong professional network.",
+            "I am deserving of a stress-free workplace.",
+            "I am proactive and prepared.",
+            "I am making a difference in my industry.",
+            "I am worthy of leadership roles.",
+            "I am a confident public speaker.",
+            "I am attracting the salary I deserve.",
+            "I am focused on my professional growth.",
+            "I am resilient to office politics.",
+            "I am a master of my time.",
+            "I am attracting exciting projects.",
+            "I am confident in my technical skills.",
+            "I am a supportive teammate.",
+            "I am proud of the work I produce.",
+            "I am always moving forward in my career.",
+            "I am an asset to any company.",
+            "I am attracting the perfect job offer.",
+            "I am clear on my career path.",
+            "I am confident in my authority.",
+            "I am worthy of a seat at the table.",
+            "I am a creative thinker.",
+            "I am solving problems with ease.",
+            "I am attracting prosperity through my work.",
+            "I am consistent in my efforts.",
+            "I am a high-value professional.",
+            "I am focused on my career mission.",
+            "I am attracting mentors who help me grow.",
+            "I am confident in my unique talents.",
+            "I am breaking records.",
+            "I am a force to be reckoned with in my field.",
+            "I am deserving of great benefits.",
+            "I am turning my passions into a career.",
+            "I am happy and successful in my work.",
+            "I am a career visionary.",
+            "I am unstoppable in my professional journey."
+        ]
+    },
+    {
+        "category": "self_love",
+        "affirmations": [
+            "I am worthy of my own love and affection.",
+            "I am beautiful exactly as I am.",
+            "I am kind to myself when I make mistakes.",
+            "I am my own priority.",
+            "I am proud of my body and all it does for me.",
+            "I am deserving of my own time.",
+            "I am enough, even on my low days.",
+            "I am a work of art.",
+            "I am releasing the need to be perfect.",
+            "I am comfortable in my own skin.",
+            "I am worthy of setting boundaries.",
+            "I am radiating confidence.",
+            "I am at peace with my reflection.",
+            "I am my own best advocate.",
+            "I am deserving of self-care.",
+            "I am making peace with my flaws.",
+            "I am a masterpiece in progress.",
+            "I am strong and capable.",
+            "I am choosing to love myself today.",
+            "I cherish my unique presence.",
+            "I am a unique and special person.",
+            "I am letting go of self-criticism.",
+            "I am filling my own cup first.",
+            "I am worthy of joy and pleasure.",
+            "I am proud of how far I've come.",
+            "I am gentle with my soul.",
+            "I am enough for me.",
+            "I am choosing thoughts that empower me.",
+            "I am worthy of deep rest.",
+            "I am celebrating my existence.",
+            "I am a magnet for positive vibes.",
+            "I am embracing my journey.",
+            "I am forgiving myself for the past.",
+            "I am worthy of beautiful things.",
+            "I am trusting my inner voice.",
+            "I am beautiful inside and out.",
+            "I am deserving of a life that feels good.",
+            "I am confident in my decisions.",
+            "I am taking up the space I deserve.",
+            "I am proud of my inner strength.",
+            "I am a radiant soul.",
+            "I am treating myself with compassion.",
+            "I am resilient.",
+            "I am worthy of kindness.",
+            "I am letting my light shine.",
+            "I am at home within myself.",
+            "I am choosing to be my own friend.",
+            "I am capable of achieving anything.",
+            "I am worthy of all the love in the world.",
+            "I am grateful for my unique gifts.",
+            "I am choosing to speak kindly to myself.",
+            "I am safe and grounded.",
+            "I am whole and complete.",
+            "I am an inspiration to myself.",
+            "I am worthy of a healthy lifestyle.",
+            "I am letting go of comparison.",
+            "I am focused on my own growth.",
+            "I am deserving of quiet moments.",
+            "I am a source of love.",
+            "I am brave enough to be myself.",
+            "I am trusting the timing of my life.",
+            "I am proud of my uniqueness.",
+            "I am becoming more confident every day.",
+            "I am worthy of a peaceful life.",
+            "I am allowing myself to be seen.",
+            "I am finding beauty in my imperfections.",
+            "I am more than my productivity.",
+            "I am a gift to the world.",
+            "I am nurturing my inner child.",
+            "I am worthy of a soft life.",
+            "I am making myself proud.",
+            "I am radiating inner peace.",
+            "I am a beacon of self-confidence.",
+            "I am choosing to trust myself.",
+            "I am deserving of high-quality connections.",
+            "I am releasing what I cannot control.",
+            "I am a powerful creator.",
+            "I am worthy of being celebrated.",
+            "I am proud of my resilience.",
+            "I am kind to my body.",
+            "I am letting go of people-pleasing.",
+            "I am worthy of happiness.",
+            "I am a beautiful human being.",
+            "I am confident in my worth.",
+            "I am a force of nature.",
+            "I am deserving of respect and honor.",
+            "I am choosing my own path.",
+            "I am a winner in my own life.",
+            "I am grateful for my strength.",
+            "I am worthy of great things.",
+            "I am blooming every day.",
+            "I am light and love.",
+            "I am trusting my process.",
+            "I am more than enough.",
+            "I am deserving of grace.",
+            "I am proud of who I am.",
+            "I am my own hero.",
+            "I am worthy of a life of ease.",
+            "I am radiating self-assurance.",
+            "I am loved and cherished."
+        ]
+    },
+    {
+        "category": "wealth",
+        "affirmations": [
+            "I am a magnet for money.",
+            "Wealth flows to me easily and effortlessly.",
+            "I am worthy of financial abundance.",
+            "I am open to receiving wealth from multiple sources.",
+            "My bank account is constantly growing.",
+            "I am smart with my money.",
+            "I am financially free.",
+            "I am deserving of a life of luxury.",
+            "I am attracting lucrative opportunities.",
+            "I am a master of my finances.",
+            "Wealth is my birthright.",
+            "I am grateful for the abundance I have.",
+            "I am creating a legacy of wealth.",
+            "I am attracting prosperity every day.",
+            "I am confident in my ability to make money.",
+            "I am worth a high hourly rate.",
+            "I am letting go of all money blocks.",
+            "I am focused on building wealth.",
+            "I am financially stable and secure.",
+            "I am a millionaire in the making.",
+            "I am attracting high-paying clients.",
+            "I am wise with my investments.",
+            "I am deserving of financial peace.",
+            "I am a money magnet.",
+            "Money comes to me in expected and unexpected ways.",
+            "I am providing value and getting paid for it.",
+            "I am wealthy in all areas of my life.",
+            "I am successful and prosperous.",
+            "I am attracting financial miracles.",
+            "I am in control of my wealth.",
+            "I am abundant and overflowing.",
+            "I am worthy of being rich.",
+            "I am making money while I sleep.",
+            "I am grateful for my financial success.",
+            "I am attracting the right resources.",
+            "I am a visionary for my finances.",
+            "I am breaking the cycle of poverty.",
+            "I am creating financial freedom for my family.",
+            "I am deserving of large sums of money.",
+            "I am confident in my financial future.",
+            "I am attracting business success.",
+            "I am generous with my wealth.",
+            "I am a magnet for luxury and comfort.",
+            "I am capable of handling big money.",
+            "I am letting go of scarcity mindset.",
+            "I am vibrating at the frequency of wealth.",
+            "I am attracting infinite abundance.",
+            "I am worth the investment.",
+            "I am smart, savvy, and rich.",
+            "I am financially independent.",
+            "I am attracting high-value opportunities.",
+            "I am grateful for the flow of money.",
+            "I am a creator of wealth.",
+            "I am deserving of the best that life offers.",
+            "I am attracting wealth through my passions.",
+            "I am making a positive impact with my money.",
+            "I am financially empowered.",
+            "I am open to the abundance of the universe.",
+            "I am attracting massive success.",
+            "I am a successful entrepreneur.",
+            "I am wealthy, healthy, and happy.",
+            "I am confident in my money-making skills.",
+            "I am attracting consistent income.",
+            "I am worthy of a six-figure income.",
+            "I am letting go of financial stress.",
+            "I am a magnet for prosperity.",
+            "I am building a wealthy mindset.",
+            "I am attracting lucrative partnerships.",
+            "I am deserving of a high net worth.",
+            "I am a beacon of abundance.",
+            "I am attracting financial breakthroughs.",
+            "I am wise with my spending.",
+            "I am grateful for my growing assets.",
+            "I am a money-making machine.",
+            "I am deserving of passive income.",
+            "I am attracting wealth into my life now.",
+            "I am focused on my financial goals.",
+            "I am financially limitless.",
+            "I am attracting the life of my dreams.",
+            "I am a successful investor.",
+            "I am worthy of an abundant lifestyle.",
+            "I am attracting new streams of income.",
+            "I am confident in my wealth-building strategy.",
+            "I am a magnet for high-ticket sales.",
+            "I am letting go of limiting beliefs about money.",
+            "I am deserving of all the riches in the world.",
+            "I am attracting financial freedom today.",
+            "I am a powerhouse of prosperity.",
+            "I am grateful for my financial security.",
+            "I am the architect of my wealth.",
+            "I am attracting success in all my ventures.",
+            "I am wise, wealthy, and well.",
+            "I am deserving of financial overflow.",
+            "I am attracting global opportunities.",
+            "I am a magnet for gold.",
+            "I am proud of my financial growth.",
+            "I am worthy of a life of abundance.",
+            "I am attracting wealth effortlessly.",
+            "I am financially whole.",
+            "I am rich and thriving."
+        ]
+    },
+    {
+        "category": "health",
+        "affirmations": [
+            "I am healthy, strong, and full of energy.",
+            "My body is a temple and I treat it with respect.",
+            "I am grateful for my physical strength.",
+            "I am nourishing my body with healthy food.",
+            "I am vibrating with health and vitality.",
+            "I am at peace with my body.",
+            "I am deserving of a long, healthy life.",
+            "I am healing every day.",
+            "I am full of life and vigor.",
+            "I am taking care of my mental health.",
+            "I am active and strong.",
+            "I am grateful for my body's resilience.",
+            "I am sleeping deeply and restfully.",
+            "I am choosing health every day.",
+            "I am radiant and glowing with health.",
+            "I am strong enough to overcome any illness.",
+            "I am at my ideal weight and feel great.",
+            "I am mindful of what I put in my body.",
+            "I am deserving of a healthy mind.",
+            "I am in tune with my body's needs.",
+            "I am getting stronger with every workout.",
+            "I am grateful for my breath.",
+            "I am letting go of unhealthy habits.",
+            "I am choosing to be physically fit.",
+            "I am a source of health and wellness.",
+            "I am deserving of peak performance.",
+            "I am treating my body with kindness.",
+            "I am healing from the inside out.",
+            "I am filled with positive energy.",
+            "I am at peace with my physical appearance.",
+            "I am committed to my well-being.",
+            "I am attracting a healthy lifestyle.",
+            "I am resilient and healthy.",
+            "I am grateful for my five senses.",
+            "I am choosing to move my body every day.",
+            "I am a magnet for health and wellness.",
+            "I am deserving of a painless life.",
+            "I am strong in mind, body, and spirit.",
+            "I am looking after my physical health.",
+            "I am peaceful and relaxed.",
+            "I am breathing in health and breathing out tension.",
+            "I am proud of my physical progress.",
+            "I am eating for energy and health.",
+            "I am deserving of a body that feels good.",
+            "I am attracting vitality and strength.",
+            "I am a healthy person.",
+            "I am grateful for my immune system.",
+            "I am healing quickly and easily.",
+            "I am full of stamina.",
+            "I am balanced and healthy.",
+            "I am letting go of stress for my health.",
+            "I am deserving of a vibrant life.",
+            "I am choosing health over convenience.",
+            "I am strong, lean, and healthy.",
+            "I am loving my body more each day.",
+            "I am grateful for the energy I have.",
+            "I am a picture of health.",
+            "I am taking steps to improve my health.",
+            "My mind is clear and my body is strong.",
+            "I am physically capable of anything.",
+            "I am focused on my longevity.",
+            "I am attracting healthy habits.",
+            "I am grateful for my flexibility.",
+            "I am choosing to rest when I need to.",
+            "I am a source of vitality.",
+            "I am deserving of a strong heart.",
+            "I am healthy in every cell of my body.",
+            "I am radiating wellness.",
+            "I am proud of my healthy choices.",
+            "I am at peace with my journey to health.",
+            "I am attracting the right doctors and healers.",
+            "I am grateful for my body's ability to heal.",
+            "I am choosing to be happy and healthy.",
+            "My stamina is increasing daily.",
+            "I am deserving of a clear mind.",
+            "I am a healthy and happy individual.",
+            "I am focused on my recovery.",
+            "I am attracting a life of wellness.",
+            "I am grateful for my mobility.",
+            "I am taking responsibility for my health.",
+            "I am vibrant, energetic, and alive.",
+            "I am deserving of deep relaxation.",
+            "I am a beacon of health.",
+            "I am choosing to live a healthy life.",
+            "I am proud of my body's strength.",
+            "I am letting go of what weights me down.",
+            "I am at home in my healthy body.",
+            "I am attracting physical abundance.",
+            "I am grateful for my health today.",
+            "I am becoming healthier every day.",
+            "I am deserving of a long life.",
+            "I am strong, fit, and motivated.",
+            "I am choosing health in every moment.",
+            "I am a healthy role model.",
+            "I am grateful for my life force.",
+            "I am at my peak health.",
+            "I am deserving of a life without pain.",
+            "I am glowing with vitality.",
+            "My body is a powerful vessel of energy.",
+            "I am vibrant and well."
+        ]
+    },
+    {
+        "category": "peace",
+        "affirmations": [
+            "I am at peace with myself and the world.",
+            "I am calm, centered, and grounded.",
+            "I am letting go of all anxiety.",
+            "I am safe and protected.",
+            "I am choosing peace over worry.",
+            "I am in control of my reactions.",
+            "I am a source of calm energy.",
+            "I am anchored in serenity.",
+            "I am at peace with my surroundings.",
+            "I am finding stillness within.",
+            "I am releasing all tension from my body.",
+            "I am grateful for this moment of peace.",
+            "I am choosing to be present.",
+            "I am at peace with my past, present, and future.",
+            "I am a beacon of serenity.",
+            "I am breathing in peace and breathing out stress.",
+            "I am safe in this moment.",
+            "I am deserving of tranquility.",
+            "I am finding peace in the simple things.",
+            "I am at home in the silence.",
+            "I am letting go of the need to control.",
+            "I am trustful of the universe.",
+            "I am calm in the face of chaos.",
+            "I am choosing to respond with love.",
+            "I am a peaceful soul.",
+            "I am deserving of a stress-free life.",
+            "I am radiating calm and kindness.",
+            "I am at peace with my journey.",
+            "I am finding balance in my life.",
+            "I am free from the weight of worry.",
+            "I am focused on the here and now.",
+            "I am grateful for my inner peace.",
+            "I am choosing to be still.",
+            "I am at peace with who I am.",
+            "I am a source of harmony.",
+            "I am deserving of a restful mind.",
+            "I am letting go of what I cannot change.",
+            "I am calm and composed.",
+            "I am at peace with my decisions.",
+            "I am finding light in the darkness.",
+            "I am safe and secure in my mind.",
+            "I am choosing to let it go.",
+            "I am at peace with my life's pace.",
+            "I am a magnet for serenity.",
+            "I am deserving of a gentle life.",
+            "I am finding joy in the quiet.",
+            "I am at peace with my thoughts.",
+            "I am releasing the need to rush.",
+            "I am a calm presence.",
+            "I am breathing deeply and easily.",
+            "I am letting go of fear.",
+            "I am choosing peace today.",
+            "I am at peace with the unknown.",
+            "I am a source of quiet strength.",
+            "I am deserving of mental clarity.",
+            "I am finding peace within my heart.",
+            "I am at peace with others.",
+            "I am letting go of judgment.",
+            "I am a peaceful being.",
+            "I am grounded in the present moment.",
+            "I am choosing to be kind to my mind.",
+            "I am at peace with my growth.",
+            "I am letting go of overwhelm.",
+            "I am a source of stillness.",
+            "I am deserving of a calm environment.",
+            "I am finding peace in every breath.",
+            "I breathe through every moment with ease.",
+            "I am letting go of expectations.",
+            "I am a beacon of light and peace.",
+            "I am choosing tranquility.",
+            "I am safe, loved, and at peace.",
+            "I am at peace with my mistakes.",
+            "I am finding harmony in my relationships.",
+            "I am choosing to be calm.",
+            "I am a source of inner stability.",
+            "I am deserving of a peaceful heart.",
+            "I am at peace with my reality.",
+            "I am letting go of the noise.",
+            "I am a calm and steady force.",
+            "I am finding grace in the silence.",
+            "I am at peace with my progress.",
+            "I am choosing to trust the process.",
+            "I am letting go of the struggle.",
+            "I am a source of peaceful energy.",
+            "I am deserving of a serene life.",
+            "I am finding peace in my home.",
+            "I am at peace with my purpose.",
+            "I am letting go of drama.",
+            "I am a calm observer.",
+            "I am choosing to breathe.",
+            "I am at peace with my emotions.",
+            "I am finding strength in my calm.",
+            "I am letting go of the past.",
+            "I am a source of balance.",
+            "I am deserving of a peaceful night's sleep.",
+            "I am finding peace in my daily routine.",
+            "I am at peace with the world.",
+            "I am letting go of doubt.",
+            "I am a calm and happy person.",
+            "I am peace."
         ]
     }
 ]

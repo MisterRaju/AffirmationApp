@@ -1,7 +1,8 @@
 export const CATEGORIES = [
   { key: 'career', label: 'Career' },
-  { key: 'student', label: 'Student' },
-  { key: 'self-care', label: 'Self Care' },
+  { key: 'wealth', label: 'Wealth' },
+  { key: 'self_love', label: 'Self Love' },
   { key: 'breakup', label: 'Breakup' },
-  { key: 'general', label: 'General' },
+  { key: 'peace', label: 'Peace' },
+  { key: 'health', label: 'Health' },
 ];

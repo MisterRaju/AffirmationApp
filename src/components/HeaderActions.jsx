@@ -8,25 +8,23 @@ const HeaderActions = ({ navigation, theme }) => (
     <Pressable
       style={({ pressed }) => [
         styles.headerButton,
-        { borderColor: theme.colors.border, backgroundColor: theme.colors.card },
         pressed && { opacity: 0.75 },
       ]}
       onPress={() => navigation.navigate('Favorites')}
       accessibilityLabel="Open favorites"
     >
-      <MaterialIcons name="favorite-border" size={20} color={theme.colors.textPrimary} />
+      <MaterialIcons name="favorite-border" size={27} color={theme.colors.textPrimary} />
     </Pressable>
 
     <Pressable
       style={({ pressed }) => [
         styles.headerButton,
-        { borderColor: theme.colors.border, backgroundColor: theme.colors.card },
         pressed && { opacity: 0.75 },
       ]}
       onPress={() => navigation.navigate('Settings')}
       accessibilityLabel="Open settings"
     >
-      <MaterialIcons name="settings" size={20} color={theme.colors.textPrimary} />
+      <MaterialIcons name="settings" size={27} color={theme.colors.textPrimary} />
     </Pressable>
   </View>
 );

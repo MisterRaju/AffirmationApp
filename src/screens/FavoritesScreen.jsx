@@ -2,8 +2,9 @@ import React from 'react';
 import { View, Text, FlatList, Pressable } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import styles from '../styles/appStyles';
+import { flattenAffirmations } from '../utils/affirmations';
 
-const affirmations = require('../affirmations.json');
+const affirmations = flattenAffirmations;
 
 const FavoritesScreen = ({ theme, favorites, toggleFavorite }) => {
   const favoriteItems = affirmations.filter(item => favorites.includes(item.text));
@@ -12,7 +13,7 @@ const FavoritesScreen = ({ theme, favorites, toggleFavorite }) => {
     <View style={[styles.screenContainer, { backgroundColor: theme.colors.background }]}> 
       <FlatList
         data={favoriteItems}
-        keyExtractor={item => item.text}
+        keyExtractor={item => item.id}
         contentContainerStyle={styles.favoritesList}
         ListEmptyComponent={
           <View style={styles.emptyState}>
