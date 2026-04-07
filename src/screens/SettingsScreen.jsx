@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, Pressable, Alert, Linking, Share, Modal } from 'react-native';
+import { View, Text, FlatList, Pressable, Alert, Linking, Share, Modal, Switch } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styles from '../styles/appStyles';
@@ -11,9 +11,17 @@ const PRIVACY_URL = 'https://example.com/privacy';
 const RATE_APP_URL = 'https://example.com/rate';
 const APP_SHARE_URL = 'https://example.com/affir';
 
-const SettingsScreen = ({ theme, themeName, setThemeName }) => {
+const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings }) => {
   const insets = useSafeAreaInsets();
   const [isAboutModalVisible, setIsAboutModalVisible] = useState(false);
+  const isReminderEnabled = Boolean(settings?.dailyReminder);
+
+  const toggleDailyReminder = () => {
+    setSettings(prev => ({
+      ...prev,
+      dailyReminder: !prev.dailyReminder,
+    }));
+  };
 
   const openExternalLink = async (url, label) => {
     try {
@@ -117,6 +125,32 @@ const SettingsScreen = ({ theme, themeName, setThemeName }) => {
         }}
         ListFooterComponent={
           <View>
+            <Text style={[styles.settingsSectionTitle, styles.settingsSplitSectionTitle, { color: theme.colors.textPrimary }]}>Notifications</Text>
+            <Pressable
+              onPress={toggleDailyReminder}
+              style={({ pressed }) => [
+                styles.settingRow,
+                { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
+                pressed && { opacity: 0.85 },
+              ]}
+            >
+              <View style={styles.settingRowLeft}>
+                <View style={[styles.settingRowIcon, { backgroundColor: theme.colors.accentMuted }]}>
+                  <MaterialIcons name="notifications-active" size={18} color={theme.colors.accent} />
+                </View>
+                <View style={styles.settingTextGroup}>
+                  <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>Reminder</Text>
+                  <Text style={[styles.settingHint, { color: theme.colors.textSecondary }]}>See affirmations in notification.</Text>
+                </View>
+              </View>
+              <Switch
+                value={isReminderEnabled}
+                onValueChange={toggleDailyReminder}
+                thumbColor="#ffffff"
+                trackColor={{ false: '#d8d8d8', true: theme.colors.accent }}
+              />
+            </Pressable>
+
             <Text style={[styles.settingsSectionTitle, { color: theme.colors.textPrimary }]}>Support</Text>
             {supportItems.map(renderSettingsItem)}
             <Text style={[styles.settingsSectionTitle, styles.settingsSplitSectionTitle, { color: theme.colors.textPrimary }]}>Legal</Text>

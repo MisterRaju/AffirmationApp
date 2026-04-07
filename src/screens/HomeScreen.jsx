@@ -94,6 +94,7 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
   const insets = useSafeAreaInsets();
   const shareCaptureRef = useRef(null);
   const listRef = useRef(null);
+  const hasHiddenBootSplashRef = useRef(false);
   const [listHeight, setListHeight] = useState(0);
   const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -112,10 +113,6 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
     },
     [selectedSet],
   );
-
-  useEffect(() => {
-    BootSplash.hide({ fade: true }).catch(() => {});
-  }, []);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -191,6 +188,12 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
   const handleContentLayout = useCallback(
     event => {
       const nextHeight = Math.round(event.nativeEvent.layout.height);
+
+      if (nextHeight > 0 && !hasHiddenBootSplashRef.current) {
+        hasHiddenBootSplashRef.current = true;
+        BootSplash.hide({ fade: true }).catch(() => {});
+      }
+
       if (nextHeight > 0 && listHeight === 0) {
         setListHeight(nextHeight);
       }

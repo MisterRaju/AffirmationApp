@@ -1,5 +1,5 @@
 export const SETTINGS_DEFAULTS = {
-  dailyReminder: false,
+  dailyReminder: true,
   calmAnimations: true,
   autoplayPager: false,
   hapticFeedback: true,

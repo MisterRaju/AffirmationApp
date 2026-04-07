@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 // import BootSplash from 'react-native-bootsplash';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppNavigator from './navigation/AppNavigator';
@@ -7,18 +7,15 @@ import { SETTINGS_DEFAULTS } from './constants/settings';
 import { THEMES } from './theme/themes';
 import { disableHourlyReminder, enableHourlyReminder } from './utils/reminders';
 import styles from './styles/appStyles';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 const App = () => {
   const [themeName, setThemeName] = useState('peach');
   const [favorites, setFavorites] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [settings, setSettings] = useState(SETTINGS_DEFAULTS);
-  const previousDailyReminderRef = useRef(SETTINGS_DEFAULTS.dailyReminder);
-
-  // useLayoutEffect(() => {
-  //   BootSplash.hide({ fade: true }).catch(() => {});
-  // }, []);
-
+  const previousDailyReminderRef = useRef(false);
+  
   useEffect(() => {
     const syncReminder = async () => {
       const wasEnabled = previousDailyReminderRef.current;
@@ -41,15 +38,28 @@ const App = () => {
 
   const theme = THEMES[themeName] || THEMES.peach;
 
+  useEffect(() => {
+    if (Platform.OS !== 'android') {
+      return;
+    }
+
+    SystemNavigationBar.setNavigationColor(theme.colors.background);
+    SystemNavigationBar.setBarMode(theme.isDark ? 'light' : 'dark');
+  }, [theme]);
+
   const toggleFavorite = text => {
     setFavorites(prev =>
-      prev.includes(text) ? prev.filter(item => item !== text) : [...prev, text],
+      prev.includes(text)
+        ? prev.filter(item => item !== text)
+        : [...prev, text],
     );
   };
 
   return (
     <SafeAreaProvider>
-      <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <View
+        style={[styles.container, { backgroundColor: theme.colors.background }]}
+      >
         <AppNavigator
           theme={theme}
           favorites={favorites}
