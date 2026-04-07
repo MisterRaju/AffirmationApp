@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text, FlatList, Pressable, Switch } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styles from '../styles/appStyles';
 import { THEMES } from '../theme/themes';
 
 const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings }) => {
+  const insets = useSafeAreaInsets();
+
   const updateSetting = (key, value) => {
     setSettings(prev => ({ ...prev, [key]: value }));
   };
@@ -20,7 +23,14 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
             <Text style={[styles.settingsSectionSubtitle, { color: theme.colors.textSecondary }]}>Choose a theme that feels right for your day.</Text>
           </View>
         }
-        contentContainerStyle={styles.settingsList}
+        contentContainerStyle={[
+          styles.settingsList,
+          {
+            paddingBottom: Math.max(24, insets.bottom + 16),
+            paddingLeft: Math.max(16, insets.left + 12),
+            paddingRight: Math.max(16, insets.right + 12),
+          },
+        ]}
         renderItem={({ item }) => {
           const active = item.key === themeName;
           return (

@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, FlatList, Pressable } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styles from '../styles/appStyles';
 import { flattenAffirmations } from '../utils/affirmations';
 
 const affirmations = flattenAffirmations;
 
 const FavoritesScreen = ({ theme, favorites, toggleFavorite }) => {
+  const insets = useSafeAreaInsets();
   const favoriteItems = affirmations.filter(item => favorites.includes(item.text));
 
   return (
@@ -14,7 +16,7 @@ const FavoritesScreen = ({ theme, favorites, toggleFavorite }) => {
       <FlatList
         data={favoriteItems}
         keyExtractor={item => item.id}
-        contentContainerStyle={styles.favoritesList}
+        contentContainerStyle={[styles.favoritesList, { paddingBottom: Math.max(20, insets.bottom + 12) }]}
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Text style={[styles.emptyStateTitle, { color: theme.colors.textPrimary }]}>No favorites yet</Text>

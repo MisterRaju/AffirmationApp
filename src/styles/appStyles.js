@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { moderateScale, responsiveFont, verticalScale } from '../utils/responsive';
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    paddingHorizontal: 30,
+    paddingHorizontal: moderateScale(30),
   },
   hiddenShotContainer: {
     position: 'absolute',
@@ -57,11 +58,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   mainAffirmationText: {
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
   pageActionsRow: {
     position: 'absolute',
-    bottom: 150,
+    bottom: verticalScale(120),
     left: 0,
     right: 0,
     flexDirection: 'row',
@@ -70,20 +71,20 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   shareButton: {
-    marginTop: 16,
+    marginTop: verticalScale(16),
   },
   text: {
-    fontSize: 24,
+    fontSize: responsiveFont(24),
     fontWeight: '600',
-    lineHeight: 34,
+    lineHeight: responsiveFont(34),
     textAlign: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: moderateScale(8),
   },
   favoriteButton: {
-    marginTop: 16,
-    borderRadius: 14,
-    paddingVertical: 12,
-    paddingHorizontal: 14,
+    marginTop: verticalScale(16),
+    borderRadius: moderateScale(14),
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: moderateScale(14),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -100,26 +101,33 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: moderateScale(24),
   },
   emptyStateTitle: {
-    fontSize: 22,
+    fontSize: responsiveFont(22),
     fontWeight: '700',
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
     textAlign: 'center',
   },
   emptyStateSubtitle: {
-    fontSize: 15,
+    fontSize: responsiveFont(15),
     textAlign: 'center',
   },
   fab: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: moderateScale(56),
+    height: moderateScale(56),
+    borderRadius: moderateScale(28),
+    borderWidth: 1,
+    borderColor: 'transparent',
     backgroundColor: '#ffb48f',
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 6,
+  },
+  fabRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: 10,
   },
   fabOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -188,7 +196,7 @@ const styles = StyleSheet.create({
   },
 
   favoritesList: {
-    padding: 16,
+    padding: moderateScale(16),
     gap: 12,
     flexGrow: 1,
   },
@@ -215,8 +223,8 @@ const styles = StyleSheet.create({
   },
 
   settingsList: {
-    padding: 16,
-    paddingBottom: 28,
+    padding: moderateScale(16),
+    paddingBottom: verticalScale(28),
   },
   settingsSectionTitle: {
     fontSize: 20,
@@ -275,6 +283,30 @@ const styles = StyleSheet.create({
   aboutText: {
     fontSize: 14,
     lineHeight: 20,
+  },
+
+  categoriesList: {
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 96,
+  },
+  categoriesHeader: {
+    marginBottom: 10,
+  },
+  categoryActionsBar: {
+    backgroundColor: 'transparent',
+    paddingHorizontal: 12,
+    paddingTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  categoryActionButton: {
+    minWidth: 110,
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
 });
 

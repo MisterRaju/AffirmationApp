@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { Modal, Pressable, Text, View, FlatList } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styles from '../styles/appStyles';
 
 const CategoryModal = ({
@@ -12,6 +13,8 @@ const CategoryModal = ({
   onClear,
   theme,
 }) => {
+  const insets = useSafeAreaInsets();
+
   const renderItem = useCallback(
     ({ item }) => {
       const selected = selectedCategories.includes(item.key);
@@ -55,7 +58,13 @@ const CategoryModal = ({
     <Modal visible={visible} animationType="slide" transparent>
       <Pressable style={styles.modalOverlay} onPress={onClose}>
         <Pressable
-          style={[styles.modalBox, { backgroundColor: theme.colors.surface }]}
+          style={[
+            styles.modalBox,
+            {
+              backgroundColor: theme.colors.surface,
+              paddingBottom: Math.max(20, insets.bottom + 12),
+            },
+          ]}
           onPress={() => {}}
         >
           <Text style={[styles.modalTitle, { color: theme.colors.textPrimary }]}>Select categories</Text>

@@ -1,11 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState, useImperativeHandle } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState, useImperativeHandle } from 'react';
 import { View, Text, StatusBar, Pressable, Alert, Image, FlatList } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Share from 'react-native-share';
 import ViewShot from 'react-native-view-shot';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styles from '../styles/appStyles';
-import { CATEGORIES } from '../constants/categories';
-import CategoryModal from '../components/CategoryModal';
 import FavoriteToggleButton from '../components/FavoriteToggleButton';
 import { flattenAffirmations } from '../utils/affirmations';
 
@@ -60,11 +59,11 @@ const ShareCaptureCard = React.forwardRef(({ theme }, ref) => {
 });
 
 const AffirmationPage = React.memo(
-  ({ item, theme, isFavorite, onToggleFavorite, onShare, itemHeight }) => (
+  ({ item, theme, isFavorite, onToggleFavorite, onShare, itemHeight, actionBottomOffset }) => (
     <View style={[styles.page, itemHeight ? { height: itemHeight } : null]}>
       <Text style={[styles.text, styles.mainAffirmationText, { color: theme.colors.textPrimary }]}>{item.text}</Text>
 
-      <View style={styles.pageActionsRow}>
+      <View style={[styles.pageActionsRow, { bottom: actionBottomOffset }]}> 
         <FavoriteToggleButton
           theme={theme}
           isFavorite={isFavorite}
@@ -89,24 +88,16 @@ const AffirmationPage = React.memo(
   ),
 );
 
-const HomeScreen = ({ theme, favorites, toggleFavorite }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCategories }) => {
+  const insets = useSafeAreaInsets();
   const shareCaptureRef = useRef(null);
+  const listRef = useRef(null);
   const [listHeight, setListHeight] = useState(0);
+  const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
   const selectedSet = useMemo(() => new Set(selectedCategories), [selectedCategories]);
-
-  const toggleCategory = useCallback(key => {
-    setSelectedCategories(prev =>
-      prev.includes(key) ? prev.filter(item => item !== key) : [...prev, key],
-    );
-  }, []);
-
-  const clearCategories = useCallback(() => {
-    setSelectedCategories([]);
-  }, []);
 
   const filteredAffirmations = useMemo(
     () => {
@@ -118,6 +109,27 @@ const HomeScreen = ({ theme, favorites, toggleFavorite }) => {
     },
     [selectedSet],
   );
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [selectedCategories]);
+
+  useEffect(() => {
+    if (!isAutoplayEnabled || filteredAffirmations.length < 2 || listHeight <= 0) {
+      return undefined;
+    }
+
+    const readingIntervalMs = 5500;
+    const interval = setInterval(() => {
+      setCurrentIndex(prevIndex => {
+        const nextIndex = (prevIndex + 1) % filteredAffirmations.length;
+        listRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+        return nextIndex;
+      });
+    }, readingIntervalMs);
+
+    return () => clearInterval(interval);
+  }, [filteredAffirmations.length, isAutoplayEnabled, listHeight]);
 
   const shareAffirmation = useCallback(async text => {
     try {
@@ -154,9 +166,10 @@ const HomeScreen = ({ theme, favorites, toggleFavorite }) => {
         onToggleFavorite={toggleFavorite}
         onShare={shareAffirmation}
         itemHeight={listHeight}
+        actionBottomOffset={Math.max(insets.bottom + 24, 96)}
       />
     ),
-    [favoriteSet, listHeight, shareAffirmation, theme, toggleFavorite],
+    [favoriteSet, insets.bottom, listHeight, shareAffirmation, theme, toggleFavorite],
   );
 
   const getItemLayout = useCallback(
@@ -178,6 +191,34 @@ const HomeScreen = ({ theme, favorites, toggleFavorite }) => {
     [listHeight],
   );
 
+  const handleMomentumEnd = useCallback(
+    event => {
+      if (!listHeight) {
+        return;
+      }
+
+      const yOffset = event.nativeEvent.contentOffset.y;
+      const nextIndex = Math.max(0, Math.round(yOffset / listHeight));
+      if (nextIndex !== currentIndex) {
+        setCurrentIndex(nextIndex);
+      }
+    },
+    [currentIndex, listHeight],
+  );
+
+  const handleAutoplayToggle = useCallback(() => {
+    setIsAutoplayEnabled(prev => !prev);
+  }, []);
+
+  const fabOverlayInsetStyle = useMemo(
+    () => ({
+      paddingLeft: Math.max(16, insets.left + 12),
+      paddingRight: Math.max(16, insets.right + 12),
+      paddingBottom: Math.max(20, insets.bottom + 12),
+    }),
+    [insets.bottom, insets.left, insets.right],
+  );
+
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <StatusBar
@@ -193,6 +234,7 @@ const HomeScreen = ({ theme, favorites, toggleFavorite }) => {
 
         {filteredAffirmations.length > 0 ? (
           <FlatList
+            ref={listRef}
             data={filteredAffirmations}
             keyExtractor={item => item.id}
             renderItem={renderAffirmation}
@@ -208,6 +250,7 @@ const HomeScreen = ({ theme, favorites, toggleFavorite }) => {
             snapToInterval={listHeight || undefined}
             snapToAlignment="start"
             disableIntervalMomentum
+            onMomentumScrollEnd={handleMomentumEnd}
             extraData={favorites}
           />
         ) : (
@@ -218,28 +261,29 @@ const HomeScreen = ({ theme, favorites, toggleFavorite }) => {
         )}
       </View>
 
-      {!modalVisible && (
-        <View style={styles.fabOverlay} pointerEvents="box-none">
+      <View style={[styles.fabOverlay, fabOverlayInsetStyle]} pointerEvents="box-none">
+        <View style={styles.fabRow}>
+          <Pressable
+            style={[styles.fab, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}
+            onPress={handleAutoplayToggle}
+            accessibilityLabel={isAutoplayEnabled ? 'Pause autoplay' : 'Start autoplay'}
+          >
+            <MaterialIcons
+              name={isAutoplayEnabled ? 'pause' : 'play-arrow'}
+              size={22}
+              color={theme.colors.textPrimary}
+            />
+          </Pressable>
+
           <Pressable
             style={[styles.fab, { backgroundColor: theme.colors.accent }]}
-            onPress={() => setModalVisible(true)}
+            onPress={() => navigation.navigate('Categories')}
             accessibilityLabel="Open categories"
           >
             <MaterialIcons name="tune" size={22} color={theme.colors.textPrimary} />
           </Pressable>
         </View>
-      )}
-
-
-      <CategoryModal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        categories={CATEGORIES}
-        selectedCategories={selectedCategories}
-        onToggleCategory={toggleCategory}
-        onClear={clearCategories}
-        theme={theme}
-      />
+      </View>
     </View>
   );
 };

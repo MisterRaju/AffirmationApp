@@ -5,11 +5,13 @@ import HeaderActions from '../components/HeaderActions';
 import HomeScreen from '../screens/HomeScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import CategoriesScreen from '../screens/CategoriesScreen';
 import { getNavigationTheme } from '../theme/navigationTheme';
+import { responsiveFont } from '../utils/responsive';
 
 const Stack = createNativeStackNavigator();
 
-const AppNavigator = ({ theme, favorites, toggleFavorite, themeName, setThemeName, settings, setSettings }) => {
+const AppNavigator = ({ theme, favorites, toggleFavorite, selectedCategories, setSelectedCategories, themeName, setThemeName, settings, setSettings }) => {
   const navTheme = useMemo(() => getNavigationTheme(theme), [theme]);
 
   return (
@@ -17,9 +19,9 @@ const AppNavigator = ({ theme, favorites, toggleFavorite, themeName, setThemeNam
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
-          headerStyle: { backgroundColor: theme.colors.header, height: 92 },
+          headerStyle: { backgroundColor: theme.colors.header },
           headerTintColor: theme.colors.textPrimary,
-          headerTitleStyle: { fontWeight: '800', fontSize: 24 },
+          headerTitleStyle: { fontWeight: '800', fontSize: responsiveFont(24) },
           contentStyle: { backgroundColor: theme.colors.background },
         }}
       >
@@ -38,6 +40,18 @@ const AppNavigator = ({ theme, favorites, toggleFavorite, themeName, setThemeNam
               theme={theme}
               favorites={favorites}
               toggleFavorite={toggleFavorite}
+              selectedCategories={selectedCategories}
+            />
+          )}
+        </Stack.Screen>
+
+        <Stack.Screen name="Categories" options={{ title: 'Categories' }}>
+          {props => (
+            <CategoriesScreen
+              {...props}
+              theme={theme}
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
             />
           )}
         </Stack.Screen>
