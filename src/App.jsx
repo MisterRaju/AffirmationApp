@@ -1,6 +1,6 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
-import BootSplash from 'react-native-bootsplash';
+// import BootSplash from 'react-native-bootsplash';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppNavigator from './navigation/AppNavigator';
 import { SETTINGS_DEFAULTS } from './constants/settings';
@@ -15,9 +15,9 @@ const App = () => {
   const [settings, setSettings] = useState(SETTINGS_DEFAULTS);
   const previousDailyReminderRef = useRef(SETTINGS_DEFAULTS.dailyReminder);
 
-  useLayoutEffect(() => {
-    BootSplash.hide({ fade: true }).catch(() => {});
-  }, []);
+  // useLayoutEffect(() => {
+  //   BootSplash.hide({ fade: true }).catch(() => {});
+  // }, []);
 
   useEffect(() => {
     const syncReminder = async () => {

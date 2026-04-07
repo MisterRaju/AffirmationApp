@@ -1,16 +1,76 @@
-import React from 'react';
-import { View, Text, FlatList, Pressable, Switch } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, Pressable, Alert, Linking, Share, Modal } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styles from '../styles/appStyles';
 import { THEMES } from '../theme/themes';
 
-const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings }) => {
-  const insets = useSafeAreaInsets();
+const LICENSE_URL = 'https://opensource.org/license/mit/';
+const TERMS_URL = 'https://example.com/terms';
+const PRIVACY_URL = 'https://example.com/privacy';
+const RATE_APP_URL = 'https://example.com/rate';
+const APP_SHARE_URL = 'https://example.com/affir';
 
-  const updateSetting = (key, value) => {
-    setSettings(prev => ({ ...prev, [key]: value }));
+const SettingsScreen = ({ theme, themeName, setThemeName }) => {
+  const insets = useSafeAreaInsets();
+  const [isAboutModalVisible, setIsAboutModalVisible] = useState(false);
+
+  const openExternalLink = async (url, label) => {
+    try {
+      const canOpen = await Linking.canOpenURL(url);
+      if (!canOpen) {
+        Alert.alert('Unavailable', `${label} is not available right now.`);
+        return;
+      }
+
+      await Linking.openURL(url);
+    } catch {
+      Alert.alert('Unavailable', `${label} is not available right now.`);
+    }
   };
+
+  const handleShareApp = async () => {
+    try {
+      await Share.share({
+        message: `Try Affir: ${APP_SHARE_URL}`,
+      });
+    } catch {
+      Alert.alert('Could not share', 'Please try again.');
+    }
+  };
+
+  const legalItems = [
+    { key: 'license', label: 'License', icon: 'gavel', action: () => openExternalLink(LICENSE_URL, 'License') },
+    { key: 'tos', label: 'Terms of Service', icon: 'description', action: () => openExternalLink(TERMS_URL, 'Terms of Service') },
+    { key: 'privacy', label: 'Privacy Policy', icon: 'privacy-tip', action: () => openExternalLink(PRIVACY_URL, 'Privacy Policy') },
+  ];
+
+  const supportItems = [
+    { key: 'feedback', label: 'Send Feedback', icon: 'email', action: () => openExternalLink('mailto:support@affir.app?subject=Affir%20Feedback', 'Feedback') },
+    { key: 'rate', label: 'Rate Us', icon: 'star-rate', action: () => openExternalLink(RATE_APP_URL, 'Rate Us') },
+    { key: 'share', label: 'Share App', icon: 'share', action: handleShareApp },
+    { key: 'about', label: 'About', icon: 'info-outline', action: () => setIsAboutModalVisible(true) },
+  ];
+
+  const renderSettingsItem = item => (
+    <Pressable
+      key={item.key}
+      onPress={item.action}
+      style={({ pressed }) => [
+        styles.settingRow,
+        { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
+        pressed && { opacity: 0.8 },
+      ]}
+    >
+      <View style={styles.settingRowLeft}>
+        <View style={[styles.settingRowIcon, { backgroundColor: theme.colors.accentMuted }]}>
+          <MaterialIcons name={item.icon} size={18} color={theme.colors.accent} />
+        </View>
+        <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>{item.label}</Text>
+      </View>
+      <MaterialIcons name="chevron-right" size={22} color={theme.colors.textSecondary} />
+    </Pressable>
+  );
 
   return (
     <View style={[styles.screenContainer, { backgroundColor: theme.colors.background }]}> 
@@ -20,7 +80,6 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
         ListHeaderComponent={
           <View>
             <Text style={[styles.settingsSectionTitle, { color: theme.colors.textPrimary }]}>Appearance</Text>
-            <Text style={[styles.settingsSectionSubtitle, { color: theme.colors.textSecondary }]}>Choose a theme that feels right for your day.</Text>
           </View>
         }
         contentContainerStyle={[
@@ -47,7 +106,6 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
             >
               <View>
                 <Text style={[styles.themeOptionTitle, { color: theme.colors.textPrimary }]}>{item.label}</Text>
-                <Text style={[styles.themeOptionSubtitle, { color: theme.colors.textSecondary }]}>{active ? 'Currently active' : 'Tap to apply'}</Text>
               </View>
               <MaterialIcons
                 name={active ? 'radio-button-checked' : 'radio-button-unchecked'}
@@ -59,63 +117,59 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
         }}
         ListFooterComponent={
           <View>
-            <Text style={[styles.settingsSectionTitle, { color: theme.colors.textPrimary }]}>Preferences</Text>
-            <View style={[styles.settingRow, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
-              <View style={styles.settingTextGroup}>
-                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>Daily reminder</Text>
-                <Text style={[styles.settingHint, { color: theme.colors.textSecondary }]}>Receive one affirmation nudge each day.</Text>
-              </View>
-              <Switch
-                value={settings.dailyReminder}
-                onValueChange={value => updateSetting('dailyReminder', value)}
-                thumbColor="#ffffff"
-                trackColor={{ false: '#d6c0b5', true: theme.colors.accent }}
-              />
-            </View>
-            <View style={[styles.settingRow, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
-              <View style={styles.settingTextGroup}>
-                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>Calm animations</Text>
-                <Text style={[styles.settingHint, { color: theme.colors.textSecondary }]}>Keep transitions smooth and slow.</Text>
-              </View>
-              <Switch
-                value={settings.calmAnimations}
-                onValueChange={value => updateSetting('calmAnimations', value)}
-                thumbColor="#ffffff"
-                trackColor={{ false: '#d6c0b5', true: theme.colors.accent }}
-              />
-            </View>
-            <View style={[styles.settingRow, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
-              <View style={styles.settingTextGroup}>
-                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>Autoplay pager</Text>
-                <Text style={[styles.settingHint, { color: theme.colors.textSecondary }]}>Auto-scroll affirmations every few seconds.</Text>
-              </View>
-              <Switch
-                value={settings.autoplayPager}
-                onValueChange={value => updateSetting('autoplayPager', value)}
-                thumbColor="#ffffff"
-                trackColor={{ false: '#d6c0b5', true: theme.colors.accent }}
-              />
-            </View>
-            <View style={[styles.settingRow, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
-              <View style={styles.settingTextGroup}>
-                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>Haptic feedback</Text>
-                <Text style={[styles.settingHint, { color: theme.colors.textSecondary }]}>Use subtle vibration on taps.</Text>
-              </View>
-              <Switch
-                value={settings.hapticFeedback}
-                onValueChange={value => updateSetting('hapticFeedback', value)}
-                thumbColor="#ffffff"
-                trackColor={{ false: '#d6c0b5', true: theme.colors.accent }}
-              />
-            </View>
-
-            <Text style={[styles.settingsSectionTitle, { color: theme.colors.textPrimary }]}>About</Text>
-            <View style={[styles.aboutCard, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
-              <Text style={[styles.aboutText, { color: theme.colors.textSecondary }]}>Affir helps you stay grounded with quick daily affirmations.</Text>
-            </View>
+            <Text style={[styles.settingsSectionTitle, { color: theme.colors.textPrimary }]}>Support</Text>
+            {supportItems.map(renderSettingsItem)}
+            <Text style={[styles.settingsSectionTitle, styles.settingsSplitSectionTitle, { color: theme.colors.textPrimary }]}>Legal</Text>
+            {legalItems.map(renderSettingsItem)}
           </View>
         }
       />
+
+      <Modal
+        visible={isAboutModalVisible}
+        animationType="slide"
+        presentationStyle="fullScreen"
+        onRequestClose={() => setIsAboutModalVisible(false)}
+      >
+        <View
+          style={[
+            styles.aboutModalScreen,
+            {
+              backgroundColor: theme.colors.background,
+              paddingTop: Math.max(18, insets.top + 8),
+              paddingBottom: Math.max(18, insets.bottom + 8),
+              paddingLeft: Math.max(16, insets.left + 12),
+              paddingRight: Math.max(16, insets.right + 12),
+            },
+          ]}
+        >
+          <View style={styles.aboutModalHeader}>
+            <View style={[styles.aboutModalBadge, { backgroundColor: theme.colors.accentMuted, borderColor: theme.colors.accent }]}> 
+              <MaterialIcons name="self-improvement" size={22} color={theme.colors.accent} />
+            </View>
+            <Pressable
+              onPress={() => setIsAboutModalVisible(false)}
+              style={({ pressed }) => [
+                styles.aboutModalClose,
+                { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
+                pressed && { opacity: 0.8 },
+              ]}
+              accessibilityLabel="Close about"
+            >
+              <MaterialIcons name="close" size={20} color={theme.colors.textPrimary} />
+            </Pressable>
+          </View>
+
+          <Text style={[styles.aboutModalTitle, { color: theme.colors.textPrimary }]}>About Affir</Text>
+          <Text style={[styles.aboutModalSubtitle, { color: theme.colors.textSecondary }]}>A calm companion for your everyday mindset.</Text>
+
+          <View style={[styles.aboutModalCard, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
+            <Text style={[styles.aboutModalBody, { color: theme.colors.textPrimary }]}>Affir delivers short affirmations designed to help you pause, reset, and move through your day with clarity.</Text>
+            <Text style={[styles.aboutModalMeta, { color: theme.colors.textSecondary }]}>Version 1.0.0</Text>
+            <Text style={[styles.aboutModalMeta, { color: theme.colors.textSecondary }]}>Made for simple daily use.</Text>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

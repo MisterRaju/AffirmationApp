@@ -13,7 +13,8 @@ export const THEMES = {
       accent: '#f49a6c',
       accentMuted: '#ffd8c1',
       overlay: 'rgba(108,66,50,0.35)',
-      header: '#ffe8da',
+      header: '#fff4ec',
+      functionBtn:"#fcd9c7"
     },
   },
   apricot: {
@@ -31,6 +32,7 @@ export const THEMES = {
       accentMuted: '#ffd9bb',
       overlay: 'rgba(118,81,54,0.3)',
       header: '#ffead5',
+      functionBtn: '#f6d8c0',
     },
   },
   coral: {
@@ -48,6 +50,7 @@ export const THEMES = {
       accentMuted: '#ffd0c5',
       overlay: 'rgba(116,74,65,0.33)',
       header: '#ffe2dc',
+      functionBtn: '#f8d3c8',
     },
   },
 };

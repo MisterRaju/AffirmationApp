@@ -7,6 +7,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styles from '../styles/appStyles';
 import FavoriteToggleButton from '../components/FavoriteToggleButton';
 import { flattenAffirmations } from '../utils/affirmations';
+import BootSplash from 'react-native-bootsplash';
+
 
 const AFFIRMATIONS_LOGO = require('../assets/affirmationslogo.png');
 
@@ -95,6 +97,7 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
   const [listHeight, setListHeight] = useState(0);
   const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const functionButtonColor = theme.colors.functionBtn || theme.colors.card || '#ffb48f';
 
   const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
   const selectedSet = useMemo(() => new Set(selectedCategories), [selectedCategories]);
@@ -109,6 +112,10 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
     },
     [selectedSet],
   );
+
+  useEffect(() => {
+    BootSplash.hide({ fade: true }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -166,7 +173,7 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
         onToggleFavorite={toggleFavorite}
         onShare={shareAffirmation}
         itemHeight={listHeight}
-        actionBottomOffset={Math.max(insets.bottom + 24, 96)}
+        actionBottomOffset={Math.max(insets.bottom + 36, 128)}
       />
     ),
     [favoriteSet, insets.bottom, listHeight, shareAffirmation, theme, toggleFavorite],
@@ -211,11 +218,14 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
   }, []);
 
   const fabOverlayInsetStyle = useMemo(
-    () => ({
-      paddingLeft: Math.max(16, insets.left + 12),
-      paddingRight: Math.max(16, insets.right + 12),
-      paddingBottom: Math.max(20, insets.bottom + 12),
-    }),
+    () => {
+      const horizontalInset = Math.max(16, Math.max(insets.left, insets.right) + 12);
+
+      return {
+        paddingHorizontal: horizontalInset,
+        paddingBottom: Math.max(10, insets.bottom + 12),
+      };
+    },
     [insets.bottom, insets.left, insets.right],
   );
 
@@ -264,23 +274,23 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
       <View style={[styles.fabOverlay, fabOverlayInsetStyle]} pointerEvents="box-none">
         <View style={styles.fabRow}>
           <Pressable
-            style={[styles.fab, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}
+            style={[styles.fab, styles.fabNoBorder, { backgroundColor: functionButtonColor }]}
             onPress={handleAutoplayToggle}
             accessibilityLabel={isAutoplayEnabled ? 'Pause autoplay' : 'Start autoplay'}
           >
             <MaterialIcons
               name={isAutoplayEnabled ? 'pause' : 'play-arrow'}
-              size={22}
+              size={30}
               color={theme.colors.textPrimary}
             />
           </Pressable>
 
           <Pressable
-            style={[styles.fab, { backgroundColor: theme.colors.accent }]}
+            style={[styles.fab, { backgroundColor: functionButtonColor }]}
             onPress={() => navigation.navigate('Categories')}
             accessibilityLabel="Open categories"
           >
-            <MaterialIcons name="tune" size={22} color={theme.colors.textPrimary} />
+            <MaterialIcons name="tune" size={30} color={theme.colors.textPrimary} />
           </Pressable>
         </View>
       </View>

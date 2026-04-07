@@ -19,8 +19,8 @@ const AppNavigator = ({ theme, favorites, toggleFavorite, selectedCategories, se
       <Stack.Navigator
         initialRouteName="Home"
         screenOptions={{
-          headerStyle: { backgroundColor: theme.colors.header },
           headerTintColor: theme.colors.textPrimary,
+          headerShadowVisible: false,
           headerTitleStyle: { fontWeight: '800', fontSize: responsiveFont(24) },
           contentStyle: { backgroundColor: theme.colors.background },
         }}

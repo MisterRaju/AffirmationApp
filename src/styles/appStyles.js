@@ -122,7 +122,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffb48f',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 6,
+    elevation: 1,
+  },
+  fabNoBorder: {
+    borderWidth: 0,
   },
   fabRow: {
     flexDirection: 'row',
@@ -132,8 +135,8 @@ const styles = StyleSheet.create({
   fabOverlay: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-    paddingLeft: 20,
+    alignItems: 'center',
+    paddingHorizontal: 20,
     paddingBottom: 30,
     zIndex: 20,
     elevation: 20,
@@ -270,6 +273,23 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
   },
+  settingRowLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    paddingRight: 12,
+  },
+  settingRowIcon: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+  },
+  settingsSplitSectionTitle: {
+    marginTop: 16,
+  },
   settingHint: {
     fontSize: 13,
     marginTop: 2,
@@ -281,6 +301,54 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   aboutText: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  aboutModalScreen: {
+    flex: 1,
+  },
+  aboutModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 18,
+  },
+  aboutModalBadge: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  aboutModalClose: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  aboutModalTitle: {
+    fontSize: 30,
+    fontWeight: '800',
+    marginBottom: 6,
+  },
+  aboutModalSubtitle: {
+    fontSize: 15,
+    marginBottom: 20,
+  },
+  aboutModalCard: {
+    borderWidth: 1,
+    borderRadius: 18,
+    padding: 16,
+  },
+  aboutModalBody: {
+    fontSize: 16,
+    lineHeight: 24,
+    marginBottom: 14,
+  },
+  aboutModalMeta: {
     fontSize: 14,
     lineHeight: 20,
   },
@@ -308,6 +376,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
+  
 });
 
 export default styles;
