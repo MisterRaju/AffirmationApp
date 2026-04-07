@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import AppNavigator from './navigation/AppNavigator';
 import { SETTINGS_DEFAULTS } from './constants/settings';
 import { THEMES } from './theme/themes';
+import styles from './styles/appStyles';
 
 const App = () => {
   const [themeName, setThemeName] = useState('peach');
   const [favorites, setFavorites] = useState([]);
   const [settings, setSettings] = useState(SETTINGS_DEFAULTS);
 
-  useEffect(() => {
-    BootSplash.hide({ fade: true });
+  useLayoutEffect(() => {
+    BootSplash.hide({ fade: true }).catch(() => {});
   }, []);
 
   const theme = THEMES[themeName] || THEMES.peach;
@@ -23,7 +24,7 @@ const App = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <AppNavigator
         theme={theme}
         favorites={favorites}
