@@ -9,9 +9,11 @@ const FavoriteToggleButton = ({ theme, isFavorite, onPress, showLabel = true }) 
     style={({ pressed }) => [
       styles.favoriteButton,
       {
-        backgroundColor: theme.colors.card,
+        backgroundColor: pressed ? theme.colors.accentMuted : theme.colors.card,
+        borderWidth: 0,
+        borderColor: 'transparent',
       },
-      pressed && { opacity: 0.8 },
+      pressed && styles.interactiveButtonPressed,
     ]}
     accessibilityLabel="Toggle favorite"
   >

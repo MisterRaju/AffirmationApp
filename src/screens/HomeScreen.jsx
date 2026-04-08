@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState, useImperativeHandle } from 'react';
-import { View, Text, StatusBar, Pressable, Alert, Image, FlatList } from 'react-native';
+import { View, Text, StatusBar, Pressable, Alert, Image, FlatList, Animated } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Share from 'react-native-share';
 import ViewShot from 'react-native-view-shot';
@@ -79,7 +79,7 @@ const AffirmationPage = React.memo(
             styles.favoriteButton,
             styles.shareButton,
             { backgroundColor: theme.colors.card },
-            pressed && { opacity: 0.8 },
+            pressed && { backgroundColor: theme.colors.accentMuted },
           ]}
           accessibilityLabel="Share affirmation image"
         >
@@ -95,10 +95,20 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
   const shareCaptureRef = useRef(null);
   const listRef = useRef(null);
   const hasHiddenBootSplashRef = useRef(false);
+  const autoplayOpacity = useRef(new Animated.Value(1)).current;
+  const autoplayEnabledRef = useRef(false);
+  const previousAutoplayRef = useRef(false);
+  const stableInsetsRef = useRef({
+    bottom: insets.bottom,
+    left: insets.left,
+    right: insets.right,
+  });
   const [listHeight, setListHeight] = useState(0);
+  const [isShareSheetOpen, setIsShareSheetOpen] = useState(false);
   const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const functionButtonColor = theme.colors.functionBtn || theme.colors.card || '#ffb48f';
+  const stableInsets = stableInsetsRef.current;
 
   const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
   const selectedSet = useMemo(() => new Set(selectedCategories), [selectedCategories]);
@@ -116,26 +126,75 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
 
   useEffect(() => {
     setCurrentIndex(0);
+
+    if (!autoplayEnabledRef.current) {
+      requestAnimationFrame(() => {
+        listRef.current?.scrollToOffset({ offset: 0, animated: false });
+      });
+    }
   }, [selectedCategories]);
 
   useEffect(() => {
-    if (!isAutoplayEnabled || filteredAffirmations.length < 2 || listHeight <= 0) {
+    autoplayEnabledRef.current = isAutoplayEnabled;
+  }, [isAutoplayEnabled]);
+
+  useEffect(() => {
+    if (!isAutoplayEnabled || filteredAffirmations.length < 2) {
+      autoplayOpacity.setValue(1);
       return undefined;
     }
 
     const readingIntervalMs = 5500;
     const interval = setInterval(() => {
-      setCurrentIndex(prevIndex => {
-        const nextIndex = (prevIndex + 1) % filteredAffirmations.length;
-        listRef.current?.scrollToIndex({ index: nextIndex, animated: true });
-        return nextIndex;
+      Animated.timing(autoplayOpacity, {
+        toValue: 0,
+        duration: 260,
+        useNativeDriver: true,
+      }).start(({ finished }) => {
+        if (!finished || !autoplayEnabledRef.current) {
+          autoplayOpacity.setValue(1);
+          return;
+        }
+
+        setCurrentIndex(prevIndex => (prevIndex + 1) % filteredAffirmations.length);
+
+        if (!autoplayEnabledRef.current) {
+          autoplayOpacity.setValue(1);
+          return;
+        }
+
+        Animated.timing(autoplayOpacity, {
+          toValue: 1,
+          duration: 260,
+          useNativeDriver: true,
+        }).start();
       });
     }, readingIntervalMs);
 
     return () => clearInterval(interval);
-  }, [filteredAffirmations.length, isAutoplayEnabled, listHeight]);
+  }, [autoplayOpacity, filteredAffirmations.length, isAutoplayEnabled]);
+
+  useEffect(() => {
+    const wasAutoplayEnabled = previousAutoplayRef.current;
+
+    if (
+      wasAutoplayEnabled &&
+      !isAutoplayEnabled &&
+      listHeight > 0 &&
+      filteredAffirmations.length > 0
+    ) {
+      const targetIndex = Math.min(currentIndex, filteredAffirmations.length - 1);
+      requestAnimationFrame(() => {
+        listRef.current?.scrollToIndex({ index: targetIndex, animated: false });
+      });
+    }
+
+    previousAutoplayRef.current = isAutoplayEnabled;
+  }, [currentIndex, filteredAffirmations.length, isAutoplayEnabled, listHeight]);
 
   const shareAffirmation = useCallback(async text => {
+    setIsShareSheetOpen(true);
+
     try {
       if (!shareCaptureRef.current) {
         return;
@@ -158,6 +217,8 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
       });
     } catch (error) {
       Alert.alert('Could not share image', 'Please try again.');
+    } finally {
+      setIsShareSheetOpen(false);
     }
   }, []);
 
@@ -170,10 +231,10 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
         onToggleFavorite={toggleFavorite}
         onShare={shareAffirmation}
         itemHeight={listHeight}
-        actionBottomOffset={Math.max(insets.bottom + 36, 128)}
+        actionBottomOffset={Math.max(stableInsets.bottom + 36, 128)}
       />
     ),
-    [favoriteSet, insets.bottom, listHeight, shareAffirmation, theme, toggleFavorite],
+    [favoriteSet, listHeight, shareAffirmation, stableInsets.bottom, theme, toggleFavorite],
   );
 
   const getItemLayout = useCallback(
@@ -217,20 +278,19 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
   );
 
   const handleAutoplayToggle = useCallback(() => {
-    setIsAutoplayEnabled(prev => !prev);
-  }, []);
+    setIsAutoplayEnabled(prev => {
+      const next = !prev;
+      autoplayEnabledRef.current = next;
+      if (!next) {
+        autoplayOpacity.stopAnimation(() => {
+          autoplayOpacity.setValue(1);
+        });
+      }
+      return next;
+    });
+  }, [autoplayOpacity]);
 
-  const fabOverlayInsetStyle = useMemo(
-    () => {
-      const horizontalInset = Math.max(16, Math.max(insets.left, insets.right) + 12);
-
-      return {
-        paddingHorizontal: horizontalInset,
-        paddingBottom: Math.max(10, insets.bottom + 12),
-      };
-    },
-    [insets.bottom, insets.left, insets.right],
-  );
+  const currentAutoplayItem = filteredAffirmations[currentIndex] || filteredAffirmations[0];
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -246,26 +306,46 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
         <ShareCaptureCard ref={shareCaptureRef} theme={theme} />
 
         {filteredAffirmations.length > 0 ? (
-          <FlatList
-            ref={listRef}
-            data={filteredAffirmations}
-            keyExtractor={item => item.id}
-            renderItem={renderAffirmation}
-            style={styles.pager}
-            decelerationRate="normal"
-            initialNumToRender={2}
-            maxToRenderPerBatch={3}
-            windowSize={5}
-            removeClippedSubviews
-            getItemLayout={getItemLayout}
-            showsVerticalScrollIndicator={false}
-            scrollEventThrottle={16}
-            snapToInterval={listHeight || undefined}
-            snapToAlignment="start"
-            disableIntervalMomentum
-            onMomentumScrollEnd={handleMomentumEnd}
-            extraData={favorites}
-          />
+          <>
+            <FlatList
+              ref={listRef}
+              data={filteredAffirmations}
+              keyExtractor={item => item.id}
+              renderItem={renderAffirmation}
+              style={[styles.pager, isAutoplayEnabled && styles.pagerHidden]}
+              decelerationRate="normal"
+              initialNumToRender={2}
+              maxToRenderPerBatch={3}
+              windowSize={5}
+              removeClippedSubviews
+              getItemLayout={getItemLayout}
+              showsVerticalScrollIndicator={false}
+              scrollEventThrottle={16}
+              snapToInterval={listHeight || undefined}
+              snapToAlignment="start"
+              disableIntervalMomentum
+              onMomentumScrollEnd={handleMomentumEnd}
+              extraData={favorites}
+              scrollEnabled={!isAutoplayEnabled}
+            />
+
+            {isAutoplayEnabled ? (
+              <Animated.View
+                pointerEvents="auto"
+                style={[styles.pager, styles.autoplayOverlay, { opacity: autoplayOpacity }]}
+              >
+                <AffirmationPage
+                  item={currentAutoplayItem}
+                  theme={theme}
+                  isFavorite={favoriteSet.has(currentAutoplayItem.text)}
+                  onToggleFavorite={toggleFavorite}
+                  onShare={shareAffirmation}
+                  itemHeight={listHeight}
+                  actionBottomOffset={Math.max(stableInsets.bottom + 36, 128)}
+                />
+              </Animated.View>
+            ) : null}
+          </>
         ) : (
           <View style={styles.emptyState}>
             <Text style={[styles.emptyStateTitle, { color: theme.colors.textPrimary }]}>No affirmations found</Text>
@@ -274,10 +354,21 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
         )}
       </View>
 
-      <View style={[styles.fabOverlay, fabOverlayInsetStyle]} pointerEvents="box-none">
+      <View
+        style={[styles.fabOverlayFixed, isShareSheetOpen && styles.fabOverlayHidden]}
+        pointerEvents="box-none"
+      >
         <View style={styles.fabRow}>
           <Pressable
-            style={[styles.fab, styles.fabNoBorder, { backgroundColor: functionButtonColor }]}
+            style={({ pressed }) => [
+              styles.fab,
+              {
+                backgroundColor: pressed ? theme.colors.accent : functionButtonColor,
+                borderWidth: 0,
+                borderColor: 'transparent',
+              },
+              pressed && styles.interactiveButtonPressed,
+            ]}
             onPress={handleAutoplayToggle}
             accessibilityLabel={isAutoplayEnabled ? 'Pause autoplay' : 'Start autoplay'}
           >
@@ -289,11 +380,19 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
           </Pressable>
 
           <Pressable
-            style={[styles.fab, { backgroundColor: functionButtonColor }]}
+            style={({ pressed }) => [
+              styles.fab,
+              {
+                backgroundColor: pressed ? theme.colors.accent : functionButtonColor,
+                borderWidth: 0,
+                borderColor: 'transparent',
+              },
+              pressed && styles.interactiveButtonPressed,
+            ]}
             onPress={() => navigation.navigate('Categories')}
             accessibilityLabel="Open categories"
           >
-            <MaterialIcons name="tune" size={30} color={theme.colors.textPrimary} />
+            <MaterialIcons name="web-stories" size={30} color={theme.colors.textPrimary} />
           </Pressable>
         </View>
       </View>

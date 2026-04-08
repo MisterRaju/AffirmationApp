@@ -32,20 +32,33 @@ const CategoriesScreen = ({ navigation, theme, selectedCategories, setSelectedCa
             styles.catItem,
             {
               borderColor: selected ? theme.colors.accent : theme.colors.border,
-              backgroundColor: selected ? theme.colors.accentMuted : theme.colors.card,
+              backgroundColor: selected
+                ? pressed
+                  ? theme.colors.accent
+                  : theme.colors.accentMuted
+                : pressed
+                  ? theme.colors.surface
+                  : theme.colors.card,
             },
-            pressed && { opacity: 0.8 },
+            pressed && styles.interactiveButtonPressed,
           ]}
         >
-          <Text
-            style={[
-              styles.catText,
-              { color: theme.colors.textSecondary },
-              selected && styles.catTextSelected,
-            ]}
-          >
-            {item.label}
-          </Text>
+          <View style={styles.iconLabelRow}>
+            <MaterialIcons
+              name={item.icon}
+              size={18}
+              color={selected ? theme.colors.textPrimary : theme.colors.textSecondary}
+            />
+            <Text
+              style={[
+                styles.catText,
+                { color: theme.colors.textSecondary },
+                selected && styles.catTextSelected,
+              ]}
+            >
+              {item.label}
+            </Text>
+          </View>
           {selected && (
             <MaterialIcons
               name="check-circle"
@@ -57,7 +70,7 @@ const CategoriesScreen = ({ navigation, theme, selectedCategories, setSelectedCa
         </Pressable>
       );
     },
-    [selectedCategories, theme.colors.accent, theme.colors.accentMuted, theme.colors.border, theme.colors.card, theme.colors.textPrimary, theme.colors.textSecondary, toggleCategory],
+    [selectedCategories, theme.colors.accent, theme.colors.accentMuted, theme.colors.border, theme.colors.card, theme.colors.surface, theme.colors.textPrimary, theme.colors.textSecondary, toggleCategory],
   );
 
   return (
@@ -84,8 +97,11 @@ const CategoriesScreen = ({ navigation, theme, selectedCategories, setSelectedCa
           style={({ pressed }) => [
             styles.actionButton,
             styles.categoryActionButton,
-            { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
-            pressed && { opacity: 0.75 },
+            {
+              backgroundColor: pressed ? theme.colors.surface : theme.colors.card,
+              borderColor: theme.colors.border,
+            },
+            pressed && styles.interactiveButtonPressed,
           ]}
         >
           <View style={styles.iconLabelRow}>
@@ -100,8 +116,8 @@ const CategoriesScreen = ({ navigation, theme, selectedCategories, setSelectedCa
             styles.actionButton,
             styles.categoryActionButton,
             styles.applyButton,
-            { backgroundColor: theme.colors.accent },
-            pressed && { opacity: 0.8 },
+            { backgroundColor: pressed ? theme.colors.accentMuted : theme.colors.accent },
+            pressed && styles.interactiveButtonPressed,
           ]}
         >
           <View style={styles.iconLabelRow}>

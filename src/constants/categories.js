@@ -1,8 +1,8 @@
 export const CATEGORIES = [
-  { key: 'career', label: 'Career' },
-  { key: 'wealth', label: 'Wealth' },
-  { key: 'self_love', label: 'Self Love' },
-  { key: 'breakup', label: 'Breakup' },
-  { key: 'peace', label: 'Peace' },
-  { key: 'health', label: 'Health' },
+  { key: 'career', label: 'Career', icon: 'work-outline' },
+  { key: 'wealth', label: 'Wealth', icon: 'account-balance-wallet' },
+  { key: 'self_love', label: 'Self Love', icon: 'favorite-border' },
+  { key: 'breakup', label: 'Breakup', icon: 'healing' },
+  { key: 'peace', label: 'Peace', icon: 'spa' },
+  { key: 'health', label: 'Health', icon: 'monitor-heart' },
 ];

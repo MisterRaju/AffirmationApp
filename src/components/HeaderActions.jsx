@@ -8,7 +8,12 @@ const HeaderActions = ({ navigation, theme }) => (
     <Pressable
       style={({ pressed }) => [
         styles.headerButton,
-        pressed && { opacity: 0.75 },
+        {
+          backgroundColor: pressed ? theme.colors.accentMuted : theme.colors.card,
+          borderWidth: 0,
+          borderColor: 'transparent',
+        },
+        pressed && styles.interactiveButtonPressed,
       ]}
       onPress={() => navigation.navigate('Favorites')}
       accessibilityLabel="Open favorites"
@@ -19,7 +24,12 @@ const HeaderActions = ({ navigation, theme }) => (
     <Pressable
       style={({ pressed }) => [
         styles.headerButton,
-        pressed && { opacity: 0.75 },
+        {
+          backgroundColor: pressed ? theme.colors.accentMuted : theme.colors.card,
+          borderWidth: 0,
+          borderColor: 'transparent',
+        },
+        pressed && styles.interactiveButtonPressed,
       ]}
       onPress={() => navigation.navigate('Settings')}
       accessibilityLabel="Open settings"

@@ -66,7 +66,7 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
       onPress={item.action}
       style={({ pressed }) => [
         styles.settingRow,
-        { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
+        { backgroundColor: theme.colors.card },
         pressed && { opacity: 0.8 },
       ]}
     >
@@ -84,7 +84,9 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
     <View style={[styles.screenContainer, { backgroundColor: theme.colors.background }]}> 
       <FlatList
         data={Object.values(THEMES)}
+        numColumns={3}
         keyExtractor={item => item.key}
+        columnWrapperStyle={styles.themeGridRow}
         ListHeaderComponent={
           <View>
             <Text style={[styles.settingsSectionTitle, { color: theme.colors.textPrimary }]}>Appearance</Text>
@@ -106,20 +108,26 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
               style={({ pressed }) => [
                 styles.themeOption,
                 {
-                  backgroundColor: active ? theme.colors.accentMuted : theme.colors.card,
+                  backgroundColor: active
+                    ? theme.colors.accentMuted
+                    : pressed
+                      ? theme.colors.surface
+                      : theme.colors.card,
                   borderColor: active ? theme.colors.accent : theme.colors.border,
                 },
-                pressed && { opacity: 0.8 },
+                pressed && styles.interactiveButtonPressed,
               ]}
             >
-              <View>
-                <Text style={[styles.themeOptionTitle, { color: theme.colors.textPrimary }]}>{item.label}</Text>
-              </View>
-              <MaterialIcons
-                name={active ? 'radio-button-checked' : 'radio-button-unchecked'}
-                size={22}
-                color={active ? theme.colors.accent : theme.colors.textSecondary}
-              />
+              <Text
+                style={[
+                  styles.themeOptionTitle,
+                  {
+                    color: active ? theme.colors.accent : theme.colors.textPrimary,
+                  },
+                ]}
+              >
+                {item.label}
+              </Text>
             </Pressable>
           );
         }}
@@ -130,7 +138,7 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
               onPress={toggleDailyReminder}
               style={({ pressed }) => [
                 styles.settingRow,
-                { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
+                { backgroundColor: theme.colors.card },
                 pressed && { opacity: 0.85 },
               ]}
             >
