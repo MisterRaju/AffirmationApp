@@ -10,10 +10,33 @@ import { storage } from './utils/storage';
 import styles from './styles/appStyles';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
+const FAVORITES_STORAGE_KEY = 'app.favorites.v1';
+const SELECTED_CATEGORIES_STORAGE_KEY = 'app.selectedCategories.v1';
+const THEME_STORAGE_KEY = 'app.theme.v1';
+
+const parseStoredArray = key => {
+  try {
+    const rawValue = storage.getString(key);
+    if (!rawValue) {
+      return [];
+    }
+
+    const parsed = JSON.parse(rawValue);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
 const App = () => {
-  const [themeName, setThemeName] = useState('peach');
-  const [favorites, setFavorites] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [themeName, setThemeName] = useState(() => {
+    const storedTheme = storage.getString(THEME_STORAGE_KEY);
+    return storedTheme && THEMES[storedTheme] ? storedTheme : 'peach';
+  });
+  const [favorites, setFavorites] = useState(() => parseStoredArray(FAVORITES_STORAGE_KEY));
+  const [selectedCategories, setSelectedCategories] = useState(() =>
+    parseStoredArray(SELECTED_CATEGORIES_STORAGE_KEY),
+  );
   const [settings, setSettings] = useState(SETTINGS_DEFAULTS);
   const [isSettingsHydrated, setIsSettingsHydrated] = useState(false);
   const previousDailyReminderRef = useRef(false);
@@ -74,6 +97,18 @@ const App = () => {
   }, [isSettingsHydrated, settings.dailyReminder]);
 
   const theme = THEMES[themeName] || THEMES.peach;
+
+  useEffect(() => {
+    storage.set(FAVORITES_STORAGE_KEY, JSON.stringify(favorites));
+  }, [favorites]);
+
+  useEffect(() => {
+    storage.set(SELECTED_CATEGORIES_STORAGE_KEY, JSON.stringify(selectedCategories));
+  }, [selectedCategories]);
+
+  useEffect(() => {
+    storage.set(THEME_STORAGE_KEY, themeName);
+  }, [themeName]);
 
   useEffect(() => {
     if (Platform.OS !== 'android') {

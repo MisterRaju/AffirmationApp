@@ -14,6 +14,35 @@ const AFFIRMATIONS_LOGO = require('../assets/affirmationslogo.png');
 
 const affirmations = flattenAffirmations;
 
+const darkenHexColor = (hexColor, amount = 0.1) => {
+  if (typeof hexColor !== 'string') {
+    return hexColor;
+  }
+
+  const normalized = hexColor.trim().replace('#', '');
+  const validHex = /^[0-9a-fA-F]{6}$/.test(normalized)
+    ? normalized
+    : /^[0-9a-fA-F]{3}$/.test(normalized)
+      ? normalized
+          .split('')
+          .map(char => char + char)
+          .join('')
+      : null;
+
+  if (!validHex) {
+    return hexColor;
+  }
+
+  const clamp = value => Math.max(0, Math.min(255, value));
+  const ratio = Math.max(0, Math.min(1, amount));
+  const r = clamp(Math.round(parseInt(validHex.slice(0, 2), 16) * (1 - ratio)));
+  const g = clamp(Math.round(parseInt(validHex.slice(2, 4), 16) * (1 - ratio)));
+  const b = clamp(Math.round(parseInt(validHex.slice(4, 6), 16) * (1 - ratio)));
+
+  const toHex = value => value.toString(16).padStart(2, '0');
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
 const ShareCaptureCard = React.forwardRef(({ theme }, ref) => {
   const [captureText, setCaptureText] = useState('');
   const viewShotRef = useRef(null);
@@ -108,6 +137,10 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
   const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const functionButtonColor = theme.colors.functionBtn || theme.colors.card || '#ffb48f';
+  const pressedFunctionButtonColor = useMemo(
+    () => darkenHexColor(functionButtonColor, 0.08),
+    [functionButtonColor],
+  );
   const stableInsets = stableInsetsRef.current;
 
   const favoriteSet = useMemo(() => new Set(favorites), [favorites]);
@@ -363,7 +396,7 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
             style={({ pressed }) => [
               styles.fab,
               {
-                backgroundColor: pressed ? theme.colors.accent : functionButtonColor,
+                backgroundColor: pressed ? pressedFunctionButtonColor : functionButtonColor,
                 borderWidth: 0,
                 borderColor: 'transparent',
               },
@@ -383,7 +416,7 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
             style={({ pressed }) => [
               styles.fab,
               {
-                backgroundColor: pressed ? theme.colors.accent : functionButtonColor,
+                backgroundColor: pressed ? pressedFunctionButtonColor : functionButtonColor,
                 borderWidth: 0,
                 borderColor: 'transparent',
               },

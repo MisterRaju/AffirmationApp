@@ -32,15 +32,13 @@ const CategoriesScreen = ({ navigation, theme, selectedCategories, setSelectedCa
             styles.catItem,
             {
               borderColor: selected ? theme.colors.accent : theme.colors.border,
-              backgroundColor: selected
-                ? pressed
-                  ? theme.colors.accent
-                  : theme.colors.accentMuted
-                : pressed
-                  ? theme.colors.surface
+              backgroundColor: pressed
+                ? theme.colors.accentMuted
+                : selected
+                  ? theme.colors.accentMuted
                   : theme.colors.card,
             },
-            pressed && styles.interactiveButtonPressed,
+            pressed && { transform: [{ scale: 0.98 }] },
           ]}
         >
           <View style={styles.iconLabelRow}>
@@ -70,7 +68,7 @@ const CategoriesScreen = ({ navigation, theme, selectedCategories, setSelectedCa
         </Pressable>
       );
     },
-    [selectedCategories, theme.colors.accent, theme.colors.accentMuted, theme.colors.border, theme.colors.card, theme.colors.surface, theme.colors.textPrimary, theme.colors.textSecondary, toggleCategory],
+    [selectedCategories, theme.colors.accent, theme.colors.accentMuted, theme.colors.border, theme.colors.card, theme.colors.textPrimary, theme.colors.textSecondary, toggleCategory],
   );
 
   return (
