@@ -8,6 +8,16 @@ import { THEMES } from '../theme/themes';
 const RATE_APP_URL = 'https://example.com/rate';
 const APP_SHARE_URL = 'https://example.com/affir';
 const FEEDBACK_EMAIL = 'itsrajughimire@gmail.com';
+const FEEDBACK_SUBJECT = 'Affir Feedback';
+const FEEDBACK_BODY = [
+  'Hi Affir Team,',
+  '',
+  'I would like to share the following feedback:',
+  '',
+  '',
+  'Device:',
+  'App version: 1.0.0',
+].join('\n');
 
 const LEGAL_CONTENT = {
   tos: {
@@ -110,6 +120,11 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
     }
   };
 
+  const handleSendFeedback = () => {
+    const mailtoUrl = `mailto:${FEEDBACK_EMAIL}?subject=${encodeURIComponent(FEEDBACK_SUBJECT)}&body=${encodeURIComponent(FEEDBACK_BODY)}`;
+    openExternalLink(mailtoUrl, 'Feedback');
+  };
+
   const openInfoModal = modalType => setActiveInfoModal(modalType);
   const closeInfoModal = () => setActiveInfoModal(null);
 
@@ -119,7 +134,7 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
   ];
 
   const supportItems = [
-    { key: 'feedback', label: 'Send Feedback', icon: 'email', action: () => openExternalLink(`mailto:${FEEDBACK_EMAIL}?subject=Affir%20Feedback`, 'Feedback') },
+    { key: 'feedback', label: 'Send Feedback', icon: 'email', action: handleSendFeedback },
     { key: 'rate', label: 'Rate Us', icon: 'star-rate', action: () => openExternalLink(RATE_APP_URL, 'Rate Us') },
     { key: 'share', label: 'Share App', icon: 'share', action: handleShareApp },
     { key: 'about', label: 'About', icon: 'info-outline', action: () => openInfoModal('about') },
@@ -308,7 +323,7 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
                 key={section.heading}
                 style={[styles.aboutModalCard, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}
               >
-                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>{section.heading}</Text>
+                <Text style={[styles.aboutModalCardTitle, { color: theme.colors.textPrimary }]}>{section.heading}</Text>
                 <Text style={[styles.aboutModalBody, { color: theme.colors.textPrimary }]}>{section.body}</Text>
               </View>
             ))}

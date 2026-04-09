@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, FlatList, Pressable } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -9,7 +9,16 @@ const affirmations = flattenAffirmations;
 
 const FavoritesScreen = ({ theme, favorites, toggleFavorite }) => {
   const insets = useSafeAreaInsets();
-  const favoriteItems = affirmations.filter(item => favorites.includes(item.text));
+  const affirmationByText = useMemo(
+    () => new Map(affirmations.map(item => [item.text, item])),
+    [],
+  );
+
+  // favorites are appended on add, so reversing puts newest favorites first.
+  const favoriteItems = useMemo(
+    () => [...favorites].reverse().map(text => affirmationByText.get(text)).filter(Boolean),
+    [affirmationByText, favorites],
+  );
 
   return (
     <View style={[styles.screenContainer, { backgroundColor: theme.colors.background }]}> 
@@ -33,20 +42,20 @@ const FavoritesScreen = ({ theme, favorites, toggleFavorite }) => {
               },
             ]}
           >
-            <Text style={[styles.favoriteText, { color: theme.colors.textPrimary }]}>{item.text}</Text>
-            <Pressable
-              onPress={() => toggleFavorite(item.text)}
-              style={({ pressed }) => [
-                styles.removeFavoriteButton,
-                { backgroundColor: theme.colors.accentMuted, borderColor: theme.colors.border },
-                pressed && { opacity: 0.75 },
-              ]}
-            >
-              <View style={styles.iconLabelRow}>
-                <MaterialIcons name="delete-outline" size={16} color={theme.colors.textPrimary} />
-                <Text style={[styles.removeFavoriteButtonText, { color: theme.colors.textPrimary }]}>Remove</Text>
-              </View>
-            </Pressable>
+            <View style={styles.favoriteCardRow}>
+              <Text style={[styles.favoriteText, styles.favoriteTextInRow, { color: theme.colors.textPrimary }]}>{item.text}</Text>
+              <Pressable
+                onPress={() => toggleFavorite(item.text)}
+                style={({ pressed }) => [
+                  styles.removeFavoriteButton,
+                  { backgroundColor: theme.colors.accentMuted, borderColor: theme.colors.border },
+                  pressed && { opacity: 0.75 },
+                ]}
+                accessibilityLabel="Remove favorite"
+              >
+                <MaterialIcons name="delete-outline" size={18} color={theme.colors.textPrimary} />
+              </Pressable>
+            </View>
           </View>
         )}
       />

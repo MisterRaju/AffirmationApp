@@ -253,21 +253,27 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     padding: 14,
   },
+  favoriteCardRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
   favoriteText: {
     fontSize: 17,
     lineHeight: 25,
-    marginBottom: 12,
+    marginBottom: 0,
+  },
+  favoriteTextInRow: {
+    flex: 1,
+    paddingRight: 12,
   },
   removeFavoriteButton: {
     alignSelf: 'flex-start',
     borderWidth: 1,
-    borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-  removeFavoriteButtonText: {
-    fontSize: 13,
-    fontWeight: '700',
+    borderRadius: 12,
+    width: 36,
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   settingsList: {
@@ -394,19 +400,26 @@ const styles = StyleSheet.create({
   aboutModalCard: {
     borderWidth: 1,
     borderRadius: 18,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    marginBottom: 12,
+  },
+  aboutModalCardTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 8,
   },
   aboutModalBody: {
     fontSize: 16,
     lineHeight: 24,
-    marginBottom: 14,
+    marginBottom: 2,
   },
   aboutModalMeta: {
     fontSize: 14,
     lineHeight: 20,
   },
   aboutModalScrollContent: {
-    paddingBottom: 6,
+    paddingBottom: 14,
   },
 
   categoriesList: {
