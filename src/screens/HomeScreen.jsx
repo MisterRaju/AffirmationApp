@@ -90,33 +90,54 @@ const ShareCaptureCard = React.forwardRef(({ theme }, ref) => {
 });
 
 const AffirmationPage = React.memo(
-  ({ item, theme, isFavorite, onToggleFavorite, onShare, itemHeight, actionBottomOffset }) => (
-    <View style={[styles.page, itemHeight ? { height: itemHeight } : null]}>
-      <Text style={[styles.text, styles.mainAffirmationText, { color: theme.colors.textPrimary }]}>{item.text}</Text>
+  ({ item, theme, isFavorite, onToggleFavorite, onShare, onDoubleTapAffirmation, itemHeight, actionBottomOffset }) => {
+    const lastTapTimestampRef = useRef(0);
 
-      <View style={[styles.pageActionsRow, { bottom: actionBottomOffset }]}> 
-        <FavoriteToggleButton
-          theme={theme}
-          isFavorite={isFavorite}
-          onPress={() => onToggleFavorite(item.text)}
-          showLabel={false}
-        />
+    const handleAffirmationTap = () => {
+      const now = Date.now();
+      const isDoubleTap = now - lastTapTimestampRef.current < 280;
+      lastTapTimestampRef.current = now;
 
+      if (isDoubleTap) {
+        onDoubleTapAffirmation(item.text);
+      }
+    };
+
+    return (
+      <View style={[styles.page, itemHeight ? { height: itemHeight } : null]}>
         <Pressable
-          onPress={() => onShare(item.text)}
-          style={({ pressed }) => [
-            styles.favoriteButton,
-            styles.shareButton,
-            { backgroundColor: theme.colors.card },
-            pressed && { backgroundColor: theme.colors.accentMuted },
-          ]}
-          accessibilityLabel="Share affirmation image"
+          onPress={handleAffirmationTap}
+          style={styles.affirmationTapZone}
+          hitSlop={{ top: 56, bottom: 56, left: 24, right: 24 }}
+          accessibilityLabel="Double tap affirmation to add to favorites"
         >
-          <MaterialIcons name="ios-share" size={30} color={theme.colors.textPrimary} />
+          <Text style={[styles.text, styles.mainAffirmationText, { color: theme.colors.textPrimary }]}>{item.text}</Text>
         </Pressable>
+
+        <View style={[styles.pageActionsRow, { bottom: actionBottomOffset }]}> 
+          <FavoriteToggleButton
+            theme={theme}
+            isFavorite={isFavorite}
+            onPress={() => onToggleFavorite(item.text)}
+            showLabel={false}
+          />
+
+          <Pressable
+            onPress={() => onShare(item.text)}
+            style={({ pressed }) => [
+              styles.favoriteButton,
+              styles.shareButton,
+              { backgroundColor: theme.colors.card },
+              pressed && { backgroundColor: theme.colors.accentMuted },
+            ]}
+            accessibilityLabel="Share affirmation image"
+          >
+            <MaterialIcons name="ios-share" size={30} color={theme.colors.textPrimary} />
+          </Pressable>
+        </View>
       </View>
-    </View>
-  ),
+    );
+  },
 );
 
 const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCategories }) => {
@@ -127,6 +148,8 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
   const autoplayOpacity = useRef(new Animated.Value(1)).current;
   const autoplayEnabledRef = useRef(false);
   const previousAutoplayRef = useRef(false);
+  const favoritePopScale = useRef(new Animated.Value(0)).current;
+  const favoritePopOpacity = useRef(new Animated.Value(0)).current;
   const stableInsetsRef = useRef({
     bottom: insets.bottom,
     left: insets.left,
@@ -255,19 +278,84 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
     }
   }, []);
 
+  const triggerFavoritePop = useCallback(() => {
+    favoritePopScale.stopAnimation();
+    favoritePopOpacity.stopAnimation();
+
+    favoritePopScale.setValue(0.45);
+    favoritePopOpacity.setValue(0);
+
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(favoritePopOpacity, {
+          toValue: 1,
+          duration: 70,
+          useNativeDriver: true,
+        }),
+        Animated.spring(favoritePopScale, {
+          toValue: 1.15,
+          speed: 34,
+          bounciness: 10,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.timing(favoritePopOpacity, {
+          toValue: 0,
+          delay: 40,
+          duration: 130,
+          useNativeDriver: true,
+        }),
+        Animated.timing(favoritePopScale, {
+          toValue: 1.4,
+          delay: 40,
+          duration: 130,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start(() => {
+      favoritePopScale.setValue(0);
+      favoritePopOpacity.setValue(0);
+    });
+  }, [favoritePopOpacity, favoritePopScale]);
+
+  const handleDoubleTapFavorite = useCallback(
+    text => {
+      if (!favoriteSet.has(text)) {
+        toggleFavorite(text);
+      }
+
+      triggerFavoritePop();
+    },
+    [favoriteSet, toggleFavorite, triggerFavoritePop],
+  );
+
+  const handleFavoriteButtonPress = useCallback(
+    text => {
+      const isAlreadyFavorite = favoriteSet.has(text);
+      toggleFavorite(text);
+
+      if (!isAlreadyFavorite) {
+        triggerFavoritePop();
+      }
+    },
+    [favoriteSet, toggleFavorite, triggerFavoritePop],
+  );
+
   const renderAffirmation = useCallback(
     ({ item }) => (
       <AffirmationPage
         item={item}
         theme={theme}
         isFavorite={favoriteSet.has(item.text)}
-        onToggleFavorite={toggleFavorite}
+        onToggleFavorite={handleFavoriteButtonPress}
         onShare={shareAffirmation}
+        onDoubleTapAffirmation={handleDoubleTapFavorite}
         itemHeight={listHeight}
         actionBottomOffset={Math.max(stableInsets.bottom + 36, 128)}
       />
     ),
-    [favoriteSet, listHeight, shareAffirmation, stableInsets.bottom, theme, toggleFavorite],
+    [favoriteSet, handleDoubleTapFavorite, handleFavoriteButtonPress, listHeight, shareAffirmation, stableInsets.bottom, theme],
   );
 
   const getItemLayout = useCallback(
@@ -371,13 +459,27 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
                   item={currentAutoplayItem}
                   theme={theme}
                   isFavorite={favoriteSet.has(currentAutoplayItem.text)}
-                  onToggleFavorite={toggleFavorite}
+                  onToggleFavorite={handleFavoriteButtonPress}
                   onShare={shareAffirmation}
+                  onDoubleTapAffirmation={handleDoubleTapFavorite}
                   itemHeight={listHeight}
                   actionBottomOffset={Math.max(stableInsets.bottom + 36, 128)}
                 />
               </Animated.View>
             ) : null}
+
+            <Animated.View
+              pointerEvents="none"
+              style={[
+                styles.favoritePopOverlay,
+                {
+                  opacity: favoritePopOpacity,
+                  transform: [{ scale: favoritePopScale }],
+                },
+              ]}
+            >
+              <MaterialIcons name="favorite" size={108} color={theme.colors.accent} />
+            </Animated.View>
           </>
         ) : (
           <View style={styles.emptyState}>

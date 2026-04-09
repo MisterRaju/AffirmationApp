@@ -66,6 +66,14 @@ const styles = StyleSheet.create({
   mainAffirmationText: {
     marginBottom: verticalScale(8),
   },
+  affirmationTapZone: {
+    flex: 1,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: verticalScale(24),
+    paddingBottom: verticalScale(72),
+  },
   pageActionsRow: {
     position: 'absolute',
     bottom: verticalScale(120),
@@ -163,6 +171,16 @@ const styles = StyleSheet.create({
   },
   fabOverlayHidden: {
     opacity: 0,
+  },
+  favoritePopOverlay: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: '24%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    zIndex: 15,
+    elevation: 15,
   },
   modalOverlay: {
     flex: 1,
