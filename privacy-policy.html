@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Affir Privacy Policy" />
+  <title>Affir Privacy Policy</title>
+  <style>
+    :root {
+      --bg: #f6efe6;
+      --card: #fffaf3;
+      --text: #2f2518;
+      --muted: #6d5a43;
+      --accent: #c96b28;
+      --accent-soft: #f3ddc7;
+      --border: #e7d6c2;
+      --shadow: 0 16px 40px rgba(58, 34, 12, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background:
+        radial-gradient(1200px 500px at 15% -10%, #ffe7d1 0%, transparent 55%),
+        radial-gradient(900px 400px at 85% 0%, #f8dcc4 0%, transparent 60%),
+        var(--bg);
+      color: var(--text);
+      font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;
+      line-height: 1.65;
+    }
+
+    .wrap {
+      width: min(940px, 92vw);
+      margin: 36px auto 44px;
+    }
+
+    .hero {
+      background: linear-gradient(140deg, #fff7ec 0%, #ffedd9 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 30px 26px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -70px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 107, 40, 0.2) 0%, rgba(201, 107, 40, 0) 70%);
+      pointer-events: none;
+    }
+
+    .app-name {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 44px);
+      line-height: 1.08;
+      letter-spacing: 0.3px;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+
+    .meta {
+      margin: 16px 0 0;
+      display: inline-block;
+      background: var(--accent-soft);
+      color: #7a3d13;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .content {
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: 0 8px 22px rgba(58, 34, 12, 0.05);
+      animation: fadeUp 480ms ease both;
+    }
+
+    section:nth-child(2) {
+      animation-delay: 50ms;
+    }
+
+    section:nth-child(3) {
+      animation-delay: 100ms;
+    }
+
+    section:nth-child(4) {
+      animation-delay: 150ms;
+    }
+
+    section:nth-child(5) {
+      animation-delay: 200ms;
+    }
+
+    section:nth-child(6) {
+      animation-delay: 250ms;
+    }
+
+    section:nth-child(7) {
+      animation-delay: 300ms;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    ul {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    a {
+      color: #8e4617;
+      font-weight: 600;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      margin: 16px 0 0;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        margin: 16px auto 24px;
+      }
+
+      .hero {
+        padding: 24px 18px;
+      }
+
+      section {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="hero">
+      <h1 class="app-name">Affir Privacy Policy</h1>
+      <p class="subtitle">
+        This Privacy Policy explains how Affir handles information when you use the app.
+      </p>
+      <p class="meta">Effective date: April 9, 2026</p>
+    </header>
+
+    <div class="content">
+      <section>
+        <h2>1. Overview</h2>
+        <p>
+          Affir is designed to work with minimal data. We do not require account creation and we do not sell your personal information.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Information We Store</h2>
+        <p>
+          Affir stores app preferences on your device so the app can remember your choices.
+        </p>
+        <ul>
+          <li>Theme preference</li>
+          <li>Favorite affirmations</li>
+          <li>Selected affirmation categories</li>
+          <li>Reminder setting (on or off)</li>
+        </ul>
+        <p>
+          This data is stored locally on your device and is not uploaded to our servers.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Notifications</h2>
+        <p>
+          If you enable reminders, Affir requests notification permission and schedules local notifications on your device.
+        </p>
+        <p>
+          Notification content is generated locally from the app's built-in affirmation library.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. What We Do Not Collect</h2>
+        <p>
+          Affir does not intentionally collect:
+        </p>
+        <ul>
+          <li>Account credentials</li>
+          <li>Precise location data</li>
+          <li>Contact lists</li>
+          <li>Photos, camera, or microphone content</li>
+          <li>Payment card information</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>5. Third-Party Services</h2>
+        <p>
+          The app may rely on platform and library services (for example, Apple App Store, Google Play, and device-level notification services) to distribute and run the app. Those services may process technical data under their own privacy policies.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Data Retention and Your Choices</h2>
+        <p>
+          Because data is stored locally, you can remove it by clearing app storage or uninstalling the app.
+        </p>
+        <p>
+          You can disable reminders at any time in the app settings.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Children's Privacy</h2>
+        <p>
+          Affir is not directed to children under 13. We do not knowingly collect personal information from children under 13.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Changes to This Policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time. If we make material changes, we will update the effective date on this page.
+        </p>
+      </section>
+
+      <section>
+        <h2>9. Contact</h2>
+        <p>
+          If you have privacy questions, contact us at
+          <a href="mailto:support@affir.app">support@affir.app</a>.
+        </p>
+      </section>
+    </div>
+
+    <p class="footer-note">
+      This page is provided for informational purposes and does not constitute legal advice.
+    </p>
+  </main>
+</body>
+</html>

@@ -1,19 +1,82 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList, Pressable, Alert, Linking, Share, Modal, Switch } from 'react-native';
+import { View, Text, FlatList, Pressable, Alert, Linking, Share, Modal, Switch, ScrollView } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styles from '../styles/appStyles';
 import { THEMES } from '../theme/themes';
 
-const LICENSE_URL = 'https://opensource.org/license/mit/';
-const TERMS_URL = 'https://example.com/terms';
-const PRIVACY_URL = 'https://example.com/privacy';
 const RATE_APP_URL = 'https://example.com/rate';
 const APP_SHARE_URL = 'https://example.com/affir';
+const FEEDBACK_EMAIL = 'itsrajughimire@gmail.com';
+
+const LEGAL_CONTENT = {
+  tos: {
+    title: 'Terms of Service',
+    icon: 'description',
+    sections: [
+      {
+        heading: 'Acceptance',
+        body:
+          'By using Affir, you agree to these Terms. If you do not agree, please stop using the app.',
+      },
+      {
+        heading: 'Personal, Non-Commercial Use',
+        body:
+          'Affir is provided for personal wellbeing and reflection. You may not copy, resell, or redistribute the app content for commercial use without permission.',
+      },
+      {
+        heading: 'Wellbeing Disclaimer',
+        body:
+          'Affirmations are motivational content and are not medical, psychological, or crisis advice. If you need urgent help, contact local emergency or professional services.',
+      },
+      {
+        heading: 'App Availability',
+        body:
+          'We may update, improve, or discontinue features at any time. We try to keep the app available but do not guarantee uninterrupted service.',
+      },
+      {
+        heading: 'Liability',
+        body:
+          'To the maximum extent permitted by law, Affir is provided as-is without warranties. We are not liable for indirect, incidental, or consequential damages.',
+      },
+    ],
+  },
+  privacy: {
+    title: 'Privacy Policy',
+    icon: 'privacy-tip',
+    sections: [
+      {
+        heading: 'Data We Store',
+        body:
+          'Affir stores your favorites, selected categories, theme, and reminder preference locally on your device to provide core app functionality.',
+      },
+      {
+        heading: 'Notifications',
+        body:
+          'If you enable reminders, the app requests notification permission and schedules local notifications. Notification text is generated from built-in affirmations.',
+      },
+      {
+        heading: 'No Account Required',
+        body:
+          'Affir does not require sign-up and does not intentionally collect account credentials from you.',
+      },
+      {
+        heading: 'No Sale of Data',
+        body:
+          'We do not sell your personal information. Local app data remains on your device unless you choose to share content using system share actions.',
+      },
+      {
+        heading: 'Control and Deletion',
+        body:
+          'You can disable reminders in settings and remove locally stored data by clearing app storage or uninstalling the app.',
+      },
+    ],
+  },
+};
 
 const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings }) => {
   const insets = useSafeAreaInsets();
-  const [isAboutModalVisible, setIsAboutModalVisible] = useState(false);
+  const [activeInfoModal, setActiveInfoModal] = useState(null);
   const isReminderEnabled = Boolean(settings?.dailyReminder);
 
   const toggleDailyReminder = () => {
@@ -47,18 +110,49 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
     }
   };
 
+  const openInfoModal = modalType => setActiveInfoModal(modalType);
+  const closeInfoModal = () => setActiveInfoModal(null);
+
   const legalItems = [
-    { key: 'license', label: 'License', icon: 'gavel', action: () => openExternalLink(LICENSE_URL, 'License') },
-    { key: 'tos', label: 'Terms of Service', icon: 'description', action: () => openExternalLink(TERMS_URL, 'Terms of Service') },
-    { key: 'privacy', label: 'Privacy Policy', icon: 'privacy-tip', action: () => openExternalLink(PRIVACY_URL, 'Privacy Policy') },
+    { key: 'tos', label: 'Terms of Service', icon: 'description', action: () => openInfoModal('tos') },
+    { key: 'privacy', label: 'Privacy Policy', icon: 'privacy-tip', action: () => openInfoModal('privacy') },
   ];
 
   const supportItems = [
-    { key: 'feedback', label: 'Send Feedback', icon: 'email', action: () => openExternalLink('mailto:support@affir.app?subject=Affir%20Feedback', 'Feedback') },
+    { key: 'feedback', label: 'Send Feedback', icon: 'email', action: () => openExternalLink(`mailto:${FEEDBACK_EMAIL}?subject=Affir%20Feedback`, 'Feedback') },
     { key: 'rate', label: 'Rate Us', icon: 'star-rate', action: () => openExternalLink(RATE_APP_URL, 'Rate Us') },
     { key: 'share', label: 'Share App', icon: 'share', action: handleShareApp },
-    { key: 'about', label: 'About', icon: 'info-outline', action: () => setIsAboutModalVisible(true) },
+    { key: 'about', label: 'About', icon: 'info-outline', action: () => openInfoModal('about') },
   ];
+
+  const modalTitle =
+    activeInfoModal === 'about' ? 'About Affir' : LEGAL_CONTENT[activeInfoModal]?.title;
+  const modalIcon =
+    activeInfoModal === 'about' ? 'self-improvement' : LEGAL_CONTENT[activeInfoModal]?.icon;
+  const modalSections =
+    activeInfoModal === 'about'
+      ? [
+          {
+            heading: 'What Affir Is',
+            body:
+              'Affir is a simple daily affirmation app built to help you pause, reset your mindset, and keep perspective during busy moments.',
+          },
+          {
+            heading: 'How It Helps',
+            body:
+              'You can browse affirmations by category, save favorites, choose your visual theme, and enable reminders for steady motivation through the day.',
+          },
+          {
+            heading: 'Privacy by Design',
+            body:
+              'Affir keeps your core preferences on your own device and aims to minimize data collection while staying practical and calm to use.',
+          },
+          {
+            heading: 'Version',
+            body: 'Version 1.0.0',
+          },
+        ]
+      : LEGAL_CONTENT[activeInfoModal]?.sections || [];
 
   const renderSettingsItem = item => (
     <Pressable
@@ -168,10 +262,10 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
       />
 
       <Modal
-        visible={isAboutModalVisible}
+        visible={Boolean(activeInfoModal)}
         animationType="slide"
         presentationStyle="fullScreen"
-        onRequestClose={() => setIsAboutModalVisible(false)}
+        onRequestClose={closeInfoModal}
       >
         <View
           style={[
@@ -187,10 +281,10 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
         >
           <View style={styles.aboutModalHeader}>
             <View style={[styles.aboutModalBadge, { backgroundColor: theme.colors.accentMuted, borderColor: theme.colors.accent }]}> 
-              <MaterialIcons name="self-improvement" size={22} color={theme.colors.accent} />
+              <MaterialIcons name={modalIcon || 'info-outline'} size={22} color={theme.colors.accent} />
             </View>
             <Pressable
-              onPress={() => setIsAboutModalVisible(false)}
+              onPress={closeInfoModal}
               style={({ pressed }) => [
                 styles.aboutModalClose,
                 { backgroundColor: theme.colors.card, borderColor: theme.colors.border },
@@ -202,14 +296,23 @@ const SettingsScreen = ({ theme, themeName, setThemeName, settings, setSettings 
             </Pressable>
           </View>
 
-          <Text style={[styles.aboutModalTitle, { color: theme.colors.textPrimary }]}>About Affir</Text>
-          <Text style={[styles.aboutModalSubtitle, { color: theme.colors.textSecondary }]}>A calm companion for your everyday mindset.</Text>
+          <Text style={[styles.aboutModalTitle, { color: theme.colors.textPrimary }]}>{modalTitle || 'Details'}</Text>
+          <Text style={[styles.aboutModalSubtitle, { color: theme.colors.textSecondary }]}>Read the full details below.</Text>
 
-          <View style={[styles.aboutModalCard, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}>
-            <Text style={[styles.aboutModalBody, { color: theme.colors.textPrimary }]}>Affir delivers short affirmations designed to help you pause, reset, and move through your day with clarity.</Text>
-            <Text style={[styles.aboutModalMeta, { color: theme.colors.textSecondary }]}>Version 1.0.0</Text>
-            <Text style={[styles.aboutModalMeta, { color: theme.colors.textSecondary }]}>Made for simple daily use.</Text>
-          </View>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.aboutModalScrollContent}
+          >
+            {modalSections.map(section => (
+              <View
+                key={section.heading}
+                style={[styles.aboutModalCard, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}
+              >
+                <Text style={[styles.settingTitle, { color: theme.colors.textPrimary }]}>{section.heading}</Text>
+                <Text style={[styles.aboutModalBody, { color: theme.colors.textPrimary }]}>{section.body}</Text>
+              </View>
+            ))}
+          </ScrollView>
         </View>
       </Modal>
     </View>

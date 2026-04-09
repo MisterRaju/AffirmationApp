@@ -10,7 +10,7 @@ import { flattenAffirmations } from '../utils/affirmations';
 import BootSplash from 'react-native-bootsplash';
 
 
-const AFFIRMATIONS_LOGO = require('../assets/affirmationslogo.png');
+const AFFIRMATIONS_LOGO = require('../assets/affirlogo.png');
 
 const affirmations = flattenAffirmations;
 

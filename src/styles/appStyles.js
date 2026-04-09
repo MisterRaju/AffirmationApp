@@ -387,6 +387,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
   },
+  aboutModalScrollContent: {
+    paddingBottom: 6,
+  },
 
   categoriesList: {
     paddingHorizontal: 12,
