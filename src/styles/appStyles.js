@@ -425,7 +425,7 @@ const styles = StyleSheet.create({
   categoriesList: {
     paddingHorizontal: 12,
     paddingTop: 12,
-    paddingBottom: 96,
+    paddingBottom: 20,
   },
   categoriesHeader: {
     marginBottom: 10,
@@ -433,10 +433,12 @@ const styles = StyleSheet.create({
   categoryActionsBar: {
     backgroundColor: 'transparent',
     paddingHorizontal: 12,
-    paddingTop: 10,
+    paddingTop: 8,
+    paddingBottom: 12,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
+    gap: 12,
   },
   categoryActionButton: {
     minWidth: 110,

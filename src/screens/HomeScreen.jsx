@@ -4,6 +4,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Share from 'react-native-share';
 import ViewShot from 'react-native-view-shot';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import RNFS from 'react-native-fs';
 import styles from '../styles/appStyles';
 import FavoriteToggleButton from '../components/FavoriteToggleButton';
 import { flattenAffirmations } from '../utils/affirmations';
@@ -59,13 +60,31 @@ const ShareCaptureCard = React.forwardRef(({ theme }, ref) => {
         await new Promise(resolve => requestAnimationFrame(resolve));
 
         const imageId = Date.now();
-        const uri = await viewShotRef.current.capture({
-          format: 'jpg',
-          quality: 0.9,
-          fileName: `affir-${imageId}`,
-        });
+        const customFilename = `Affir-Affirmation-${imageId}.jpg`;
+        
+        try {
+          const uri = await viewShotRef.current.capture({
+            format: 'jpg',
+            quality: 0.9,
+            result: 'tmpfile',
+          });
 
-        return { uri, imageId };
+          // Copy the temp file to cache directory for sharing
+          const cacheDir = RNFS.CachesDirectoryPath;
+          const namedFilePath = `${cacheDir}/${customFilename}`;
+          
+          await RNFS.copyFile(uri, namedFilePath);
+
+          // Ensure the path has file:// prefix for sharing
+          const shareableUri = namedFilePath.startsWith('file://') 
+            ? namedFilePath 
+            : `file://${namedFilePath}`;
+
+          return { uri: shareableUri, imageId };
+        } catch (error) {
+          console.error('Error capturing screenshot:', error);
+          return null;
+        }
       },
     }),
     [],
@@ -248,6 +267,15 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
     previousAutoplayRef.current = isAutoplayEnabled;
   }, [currentIndex, filteredAffirmations.length, isAutoplayEnabled, listHeight]);
 
+  useEffect(() => {
+    if (isAutoplayEnabled && listHeight > 0 && filteredAffirmations.length > 0) {
+      const targetIndex = Math.min(currentIndex, filteredAffirmations.length - 1);
+      requestAnimationFrame(() => {
+        listRef.current?.scrollToIndex({ index: targetIndex, animated: false });
+      });
+    }
+  }, [isAutoplayEnabled && currentIndex, listHeight, filteredAffirmations.length]);
+
   const shareAffirmation = useCallback(async text => {
     setIsShareSheetOpen(true);
 
@@ -258,20 +286,22 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
 
       const captured = await shareCaptureRef.current.captureForText(text);
       if (!captured) {
+        Alert.alert('Error', 'Failed to capture affirmation');
         return;
       }
 
       const { uri, imageId } = captured;
-      const shareUrl = uri.startsWith('file://') ? uri : `file://${uri}`;
-
+      
+      // uri already has file:// prefix from capture function
       await Share.open({
         title: 'Share affirmation',
         type: 'image/jpeg',
-        url: shareUrl,
-        filename: `affir-${imageId}.jpg`,
+        url: uri,
+        filename: `Affir-Affirmation-${imageId}.jpg`,
         failOnCancel: false,
       });
     } catch (error) {
+      console.error('Share error:', error);
       Alert.alert('Could not share image', 'Please try again.');
     } finally {
       setIsShareSheetOpen(false);
@@ -352,7 +382,7 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
         onShare={shareAffirmation}
         onDoubleTapAffirmation={handleDoubleTapFavorite}
         itemHeight={listHeight}
-        actionBottomOffset={Math.max(stableInsets.bottom + 36, 128)}
+        actionBottomOffset={Math.max(stableInsets.bottom + 100, 200)}
       />
     ),
     [favoriteSet, handleDoubleTapFavorite, handleFavoriteButtonPress, listHeight, shareAffirmation, stableInsets.bottom, theme],
@@ -428,45 +458,34 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
 
         {filteredAffirmations.length > 0 ? (
           <>
-            <FlatList
-              ref={listRef}
-              data={filteredAffirmations}
-              keyExtractor={item => item.id}
-              renderItem={renderAffirmation}
-              style={[styles.pager, isAutoplayEnabled && styles.pagerHidden]}
-              decelerationRate="normal"
-              initialNumToRender={2}
-              maxToRenderPerBatch={3}
-              windowSize={5}
-              removeClippedSubviews
-              getItemLayout={getItemLayout}
-              showsVerticalScrollIndicator={false}
-              scrollEventThrottle={16}
-              snapToInterval={listHeight || undefined}
-              snapToAlignment="start"
-              disableIntervalMomentum
-              onMomentumScrollEnd={handleMomentumEnd}
-              extraData={favorites}
-              scrollEnabled={!isAutoplayEnabled}
-            />
-
-            {isAutoplayEnabled ? (
-              <Animated.View
-                pointerEvents="auto"
-                style={[styles.pager, styles.autoplayOverlay, { opacity: autoplayOpacity }]}
-              >
-                <AffirmationPage
-                  item={currentAutoplayItem}
-                  theme={theme}
-                  isFavorite={favoriteSet.has(currentAutoplayItem.text)}
-                  onToggleFavorite={handleFavoriteButtonPress}
-                  onShare={shareAffirmation}
-                  onDoubleTapAffirmation={handleDoubleTapFavorite}
-                  itemHeight={listHeight}
-                  actionBottomOffset={Math.max(stableInsets.bottom + 36, 128)}
-                />
-              </Animated.View>
-            ) : null}
+            <Animated.View
+              style={[
+                styles.pager,
+                isAutoplayEnabled ? { opacity: autoplayOpacity } : { opacity: 1 },
+              ]}
+            >
+              <FlatList
+                ref={listRef}
+                data={filteredAffirmations}
+                keyExtractor={item => item.id}
+                renderItem={renderAffirmation}
+                style={styles.pager}
+                decelerationRate="normal"
+                initialNumToRender={2}
+                maxToRenderPerBatch={3}
+                windowSize={5}
+                removeClippedSubviews
+                getItemLayout={getItemLayout}
+                showsVerticalScrollIndicator={false}
+                scrollEventThrottle={16}
+                snapToInterval={listHeight || undefined}
+                snapToAlignment="start"
+                disableIntervalMomentum
+                onMomentumScrollEnd={handleMomentumEnd}
+                extraData={favorites}
+                scrollEnabled={true}
+              />
+            </Animated.View>
 
             <Animated.View
               pointerEvents="none"
@@ -493,43 +512,25 @@ const HomeScreen = ({ navigation, theme, favorites, toggleFavorite, selectedCate
         style={[styles.fabOverlayFixed, isShareSheetOpen && styles.fabOverlayHidden]}
         pointerEvents="box-none"
       >
-        <View style={styles.fabRow}>
-          <Pressable
-            style={({ pressed }) => [
-              styles.fab,
-              {
-                backgroundColor: pressed ? pressedFunctionButtonColor : functionButtonColor,
-                borderWidth: 0,
-                borderColor: 'transparent',
-              },
-              pressed && styles.interactiveButtonPressed,
-            ]}
-            onPress={handleAutoplayToggle}
-            accessibilityLabel={isAutoplayEnabled ? 'Pause autoplay' : 'Start autoplay'}
-          >
-            <MaterialIcons
-              name={isAutoplayEnabled ? 'pause' : 'play-arrow'}
-              size={30}
-              color={theme.colors.textPrimary}
-            />
-          </Pressable>
-
-          <Pressable
-            style={({ pressed }) => [
-              styles.fab,
-              {
-                backgroundColor: pressed ? pressedFunctionButtonColor : functionButtonColor,
-                borderWidth: 0,
-                borderColor: 'transparent',
-              },
-              pressed && styles.interactiveButtonPressed,
-            ]}
-            onPress={() => navigation.navigate('Categories')}
-            accessibilityLabel="Open categories"
-          >
-            <MaterialIcons name="web-stories" size={30} color={theme.colors.textPrimary} />
-          </Pressable>
-        </View>
+        <Pressable
+          style={({ pressed }) => [
+            styles.fab,
+            {
+              backgroundColor: pressed ? pressedFunctionButtonColor : functionButtonColor,
+              borderWidth: 0,
+              borderColor: 'transparent',
+            },
+            pressed && styles.interactiveButtonPressed,
+          ]}
+          onPress={handleAutoplayToggle}
+          accessibilityLabel={isAutoplayEnabled ? 'Pause autoplay' : 'Start autoplay'}
+        >
+          <MaterialIcons
+            name={isAutoplayEnabled ? 'pause' : 'play-arrow'}
+            size={30}
+            color={theme.colors.textPrimary}
+          />
+        </Pressable>
       </View>
     </View>
   );

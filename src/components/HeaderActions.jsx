@@ -15,6 +15,22 @@ const HeaderActions = ({ navigation, theme }) => (
         },
         pressed && styles.interactiveButtonPressed,
       ]}
+      onPress={() => navigation.navigate('Categories')}
+      accessibilityLabel="Open categories"
+    >
+      <MaterialIcons name="web-stories" size={27} color={theme.colors.textPrimary} />
+    </Pressable>
+
+    <Pressable
+      style={({ pressed }) => [
+        styles.headerButton,
+        {
+          backgroundColor: pressed ? theme.colors.accentMuted : theme.colors.card,
+          borderWidth: 0,
+          borderColor: 'transparent',
+        },
+        pressed && styles.interactiveButtonPressed,
+      ]}
       onPress={() => navigation.navigate('Favorites')}
       accessibilityLabel="Open favorites"
     >

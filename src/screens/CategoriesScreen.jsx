@@ -72,7 +72,7 @@ const CategoriesScreen = ({ navigation, theme, selectedCategories, setSelectedCa
   );
 
   return (
-    <View style={[styles.screenContainer, { backgroundColor: theme.colors.background }]}> 
+    <View style={[styles.screenContainer, { backgroundColor: theme.colors.background }]}>
       <FlatList
         data={CATEGORIES}
         keyExtractor={item => item.key}
@@ -89,7 +89,7 @@ const CategoriesScreen = ({ navigation, theme, selectedCategories, setSelectedCa
         ]}
       />
 
-      <View style={[styles.categoryActionsBar, { paddingBottom: Math.max(12, insets.bottom + 8) }]}> 
+      <View style={[styles.categoryActionsBar, { paddingBottom: Math.max(12, insets.bottom + 8) }]}>
         <Pressable
           onPress={clearCategories}
           style={({ pressed }) => [
